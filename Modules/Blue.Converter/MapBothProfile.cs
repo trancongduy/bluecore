@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Blue.Constract.Dtos;
-using Blue.Data.IdentityModel;
-using Blue.Model;
+using Blue.Data.Models;
+using Blue.Data.Models.IdentityModel;
 
 namespace Blue.Converter
 {

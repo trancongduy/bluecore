@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Framework.Constract.SeedWork;
 
-namespace Blue.Model
+namespace Blue.Data.Models
 {
     public class Product : BaseEntity
     {

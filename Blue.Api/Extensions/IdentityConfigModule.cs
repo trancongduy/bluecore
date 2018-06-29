@@ -1,6 +1,6 @@
 ﻿using Autofac;
-using Blue.Data.IdentityModel;
 using Blue.Data.IdentityService;
+using Blue.Data.Models.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 
 namespace Blue.Api.Extensions
@@ -9,11 +9,11 @@ namespace Blue.Api.Extensions
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<UserStore>().As<IUserStore<User>>().InstancePerLifetimeScope();
-            builder.RegisterType<RoleStore>().As<IRoleStore<Role>>().InstancePerLifetimeScope();
-            builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<ApplicationRoleManager>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<UserStore>().As<IUserStore<User>>().InstancePerRequest();
+            builder.RegisterType<RoleStore>().As<IRoleStore<Role>>().InstancePerRequest();
+            builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
+            builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerRequest();
+            builder.RegisterType<ApplicationRoleManager>().AsSelf().InstancePerRequest();
         }
     }
 }

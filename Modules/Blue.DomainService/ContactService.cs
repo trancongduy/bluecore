@@ -1,5 +1,5 @@
 ﻿using Blue.Constract.Dtos;
-using Blue.Model;
+using Blue.Data.Models;
 using Framework.Constract.Interfaces;
 using Framework.Data.SeedWork;
 

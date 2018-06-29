@@ -6,6 +6,7 @@ using Blue.Data.IdentityService;
 using Blue.DomainService;
 using Framework.Common.Middlewares;
 using Framework.Data.Models;
+using Framework.Data.SeedWork;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -99,14 +100,11 @@ namespace Blue.Api
                     options.SerializerSettings.Formatting = Formatting.Indented;
                 });
 
-            //services.AddMvcCore()
-            //        .AddAuthorization()
-            //        .AddJsonFormatters(j =>
-            //        {
-            //            //j.ContractResolver = new DefaultContractResolver();
-            //            j.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            //            j.Formatting = Formatting.Indented;
-            //        });
+            services.Configure<IISOptions>(iis =>
+            {
+                iis.AuthenticationDisplayName = "Windows";
+                iis.AutomaticAuthentication = false;
+            });
 
             // Enable Cors
             // this defines a CORS policy called "AllowAll"

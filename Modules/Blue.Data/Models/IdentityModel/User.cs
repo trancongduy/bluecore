@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
 using Framework.Constract.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
-namespace Blue.Data.IdentityModel
+namespace Blue.Data.Models.IdentityModel
 {
     public class User : IdentityUser<Guid>, IAuditableEntity
     {

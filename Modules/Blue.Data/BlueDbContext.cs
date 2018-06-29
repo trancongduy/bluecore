@@ -12,12 +12,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Framework.Data.Interfaces;
 using Framework.Data.Models;
-using Blue.Data.IdentityModel;
 using Framework.Constract.SeedWork;
 using Microsoft.EntityFrameworkCore.Storage;
 using Blue.Data.IdentityService;
+using Blue.Data.Models.IdentityModel;
 using Framework.Constract.Constant;
 using Framework.Constract.Interfaces;
+using Framework.Data.SeedWork;
 
 namespace Blue.Data
 {

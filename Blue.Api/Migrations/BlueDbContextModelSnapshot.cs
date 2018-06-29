@@ -15,11 +15,123 @@ namespace Blue.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.Role", b =>
+            modelBuilder.Entity("Blue.Data.Models.AuditTrail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AudittingLevel");
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<DateTimeOffset>("CreatedDate");
+
+                    b.Property<string>("Data");
+
+                    b.Property<int>("EventType");
+
+                    b.Property<string>("ExternalIpAddress");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("SessionId");
+
+                    b.Property<DateTimeOffset>("TimeStamp");
+
+                    b.Property<string>("UpdatedBy");
+
+                    b.Property<DateTimeOffset>("UpdatedDate");
+
+                    b.Property<string>("UrlAccessed");
+
+                    b.Property<int>("UserAction");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuditTrail");
+                });
+
+            modelBuilder.Entity("Blue.Data.Models.Component", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<DateTimeOffset>("CreatedDate");
+
+                    b.Property<string>("Icon");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("Translate");
+
+                    b.Property<string>("Type");
+
+                    b.Property<string>("UpdatedBy");
+
+                    b.Property<DateTimeOffset>("UpdatedDate");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Component");
+                });
+
+            modelBuilder.Entity("Blue.Data.Models.Contact", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("CompanyName");
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<DateTimeOffset>("CreatedDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Facebook");
+
+                    b.Property<string>("Fax");
+
+                    b.Property<string>("Google");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Lat");
+
+                    b.Property<string>("Lng");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<string>("Pinterest");
+
+                    b.Property<string>("Twitter");
+
+                    b.Property<string>("UpdatedBy");
+
+                    b.Property<DateTimeOffset>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contact");
+                });
+
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -55,13 +167,13 @@ namespace Blue.Api.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = new Guid("5a61f008-0ce1-4b60-8c0c-c12c721e475d"), ConcurrencyStamp = "b949ec9d-54a2-41a8-90a9-eb04497a8de6", CreatedBy = "systemadmin", CreatedDate = new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 30, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), IsDeleted = false, Name = "admin", NormalizedName = "ADMIN", UpdatedBy = "systemadmin", UpdatedDate = new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 32, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) },
-                        new { Id = new Guid("7a749297-4edf-4d16-a769-d3bada83247e"), ConcurrencyStamp = "1781ea63-23e9-44c2-b2ec-67ff041991e8", CreatedBy = "systemadmin", CreatedDate = new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 32, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), IsDeleted = false, Name = "customer", NormalizedName = "CUSTOMER", UpdatedBy = "systemadmin", UpdatedDate = new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 32, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) },
-                        new { Id = new Guid("61f3dc6e-3863-40e5-ba2b-a6334b5590ac"), ConcurrencyStamp = "4417f3ca-34fb-4660-a8d7-1ddfd0e9cab4", CreatedBy = "systemadmin", CreatedDate = new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 32, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), IsDeleted = false, Name = "guest", NormalizedName = "GUEST", UpdatedBy = "systemadmin", UpdatedDate = new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 32, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) }
+                        new { Id = new Guid("5a61f008-0ce1-4b60-8c0c-c12c721e475d"), ConcurrencyStamp = "ee1e5ccb-a64e-4bb5-bdae-48dea1c74d7f", CreatedBy = "systemadmin", CreatedDate = new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 830, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), IsDeleted = false, Name = "admin", NormalizedName = "ADMIN", UpdatedBy = "systemadmin", UpdatedDate = new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 832, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) },
+                        new { Id = new Guid("7a749297-4edf-4d16-a769-d3bada83247e"), ConcurrencyStamp = "4ac4b839-9ad4-42b6-86fa-3832e4cf7960", CreatedBy = "systemadmin", CreatedDate = new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 832, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), IsDeleted = false, Name = "customer", NormalizedName = "CUSTOMER", UpdatedBy = "systemadmin", UpdatedDate = new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 832, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) },
+                        new { Id = new Guid("61f3dc6e-3863-40e5-ba2b-a6334b5590ac"), ConcurrencyStamp = "a2a4daa3-f29b-4e2a-a7f0-a1adf4976d3b", CreatedBy = "systemadmin", CreatedDate = new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 832, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), IsDeleted = false, Name = "guest", NormalizedName = "GUEST", UpdatedBy = "systemadmin", UpdatedDate = new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 832, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) }
                     );
                 });
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.RoleClaim", b =>
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.RoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,7 +192,7 @@ namespace Blue.Api.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.User", b =>
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -157,12 +269,12 @@ namespace Blue.Api.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = new Guid("53319368-f467-4d49-a1b0-8da303b6c24a"), AccessFailedCount = 0, ConcurrencyStamp = "ba119b6c-6b66-46a0-9bff-ef81eaff91dd", CreatedBy = "systemadmin", CreatedDate = new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 33, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), Email = "system@gmail.com", EmailConfirmed = false, FirstName = "System", IsDeleted = true, IsLocked = false, LastName = "Administrator", LockedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), LockoutEnabled = false, NormalizedEmail = "SYSTEM@SIMPLCOMMERCE.COM", NormalizedUserName = "SYSTEMADMIN", PasswordHash = "AQAAAAEAACcQAAAAEFB+UXfZPfZvMWdDDl9SSWPNDoKKBpBASb/CzK/rmWu/OlE15ALyEAY/QKP4jEkRyg==", PhoneNumberConfirmed = false, RememberMe = false, SecurityStamp = "ef21d984-9ddd-40d3-8ad3-caf1cf7009bf", ShouldLockout = false, TwoFactorEnabled = false, UnLockedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), UpdatedBy = "systemadmin", UpdatedDate = new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 33, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), UserName = "systemadmin" },
-                        new { Id = new Guid("55e816d6-34e1-4a1c-9940-4bc5381b21b8"), AccessFailedCount = 0, ConcurrencyStamp = "9bd89126-8051-4401-87be-b7a5ae0daf43", CreatedBy = "systemadmin", CreatedDate = new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 33, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), Email = "admin@gmail.com", EmailConfirmed = false, FirstName = "Shop", IsDeleted = false, IsLocked = false, LastName = "Admin", LockedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), LockoutEnabled = false, NormalizedEmail = "ADMIN@GMAIL.COM", NormalizedUserName = "ADMIN", PasswordHash = "AQAAAAEAACcQAAAAEFB+UXfZPfZvMWdDDl9SSWPNDoKKBpBASb/CzK/rmWu/OlE15ALyEAY/QKP4jEkRyg==", PhoneNumberConfirmed = false, RememberMe = false, SecurityStamp = "8bfd037b-da79-4f77-a20b-2c7cdb276293", ShouldLockout = false, TwoFactorEnabled = false, UnLockedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), UpdatedBy = "systemadmin", UpdatedDate = new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 33, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), UserName = "admin" }
+                        new { Id = new Guid("53319368-f467-4d49-a1b0-8da303b6c24a"), AccessFailedCount = 0, ConcurrencyStamp = "43db0e60-cce8-48aa-8416-73a5a9c8cec8", CreatedBy = "systemadmin", CreatedDate = new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 833, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), Email = "system@gmail.com", EmailConfirmed = false, FirstName = "System", IsDeleted = true, IsLocked = false, LastName = "Administrator", LockedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), LockoutEnabled = false, NormalizedEmail = "SYSTEM@SIMPLCOMMERCE.COM", NormalizedUserName = "SYSTEMADMIN", PasswordHash = "AQAAAAEAACcQAAAAEFB+UXfZPfZvMWdDDl9SSWPNDoKKBpBASb/CzK/rmWu/OlE15ALyEAY/QKP4jEkRyg==", PhoneNumberConfirmed = false, RememberMe = false, SecurityStamp = "5b8abe7f-b1e8-4c6a-90a8-9e96c2467ad2", ShouldLockout = false, TwoFactorEnabled = false, UnLockedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), UpdatedBy = "systemadmin", UpdatedDate = new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 833, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), UserName = "systemadmin" },
+                        new { Id = new Guid("55e816d6-34e1-4a1c-9940-4bc5381b21b8"), AccessFailedCount = 0, ConcurrencyStamp = "d10bb189-b82f-4cb0-9841-eeaa3e31b4f2", CreatedBy = "systemadmin", CreatedDate = new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 833, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), Email = "admin@gmail.com", EmailConfirmed = false, FirstName = "Shop", IsDeleted = false, IsLocked = false, LastName = "Admin", LockedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), LockoutEnabled = false, NormalizedEmail = "ADMIN@GMAIL.COM", NormalizedUserName = "ADMIN", PasswordHash = "AQAAAAEAACcQAAAAEFB+UXfZPfZvMWdDDl9SSWPNDoKKBpBASb/CzK/rmWu/OlE15ALyEAY/QKP4jEkRyg==", PhoneNumberConfirmed = false, RememberMe = false, SecurityStamp = "2ce5eb19-6f1e-4112-a50a-49e6b8925ef4", ShouldLockout = false, TwoFactorEnabled = false, UnLockedDate = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), UpdatedBy = "systemadmin", UpdatedDate = new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 833, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), UserName = "admin" }
                     );
                 });
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.UserClaim", b =>
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.UserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -181,7 +293,7 @@ namespace Blue.Api.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.UserLogin", b =>
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.UserLogin", b =>
                 {
                     b.Property<Guid>("UserId");
 
@@ -199,7 +311,7 @@ namespace Blue.Api.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.UserRole", b =>
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.UserRole", b =>
                 {
                     b.Property<Guid>("UserId");
 
@@ -217,7 +329,7 @@ namespace Blue.Api.Migrations
                     );
                 });
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.UserToken", b =>
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.UserToken", b =>
                 {
                     b.Property<Guid>("UserId");
 
@@ -232,132 +344,7 @@ namespace Blue.Api.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Blue.Model.Audit", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AudittingLevel");
-
-                    b.Property<string>("CreatedBy");
-
-                    b.Property<DateTimeOffset>("CreatedDate");
-
-                    b.Property<string>("Data");
-
-                    b.Property<int>("EventType");
-
-                    b.Property<string>("ExternalIpAddress");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("SessionId");
-
-                    b.Property<DateTimeOffset>("TimeStamp");
-
-                    b.Property<string>("UpdatedBy");
-
-                    b.Property<DateTimeOffset>("UpdatedDate");
-
-                    b.Property<string>("UrlAccessed");
-
-                    b.Property<int>("UserAction");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Audit");
-                });
-
-            modelBuilder.Entity("Blue.Model.Category", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CreatedBy");
-
-                    b.Property<DateTimeOffset>("CreatedDate");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(5000);
-
-                    b.Property<int>("DisplayOrder");
-
-                    b.Property<bool>("IncludeInMenu");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<bool>("IsPublished");
-
-                    b.Property<string>("Name");
-
-                    b.Property<long?>("ParentId");
-
-                    b.Property<Guid?>("ParentId1");
-
-                    b.Property<string>("SeoTitle");
-
-                    b.Property<Guid?>("ThumbnailImageId");
-
-                    b.Property<string>("UpdatedBy");
-
-                    b.Property<DateTimeOffset>("UpdatedDate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentId1");
-
-                    b.HasIndex("ThumbnailImageId");
-
-                    b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("Blue.Model.Contact", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Address");
-
-                    b.Property<string>("CompanyName");
-
-                    b.Property<string>("CreatedBy");
-
-                    b.Property<DateTimeOffset>("CreatedDate");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("Facebook");
-
-                    b.Property<string>("Fax");
-
-                    b.Property<string>("Google");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("Lat");
-
-                    b.Property<string>("Lng");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<string>("Pinterest");
-
-                    b.Property<string>("Twitter");
-
-                    b.Property<string>("UpdatedBy");
-
-                    b.Property<DateTimeOffset>("UpdatedDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Contact");
-                });
-
-            modelBuilder.Entity("Blue.Model.Media", b =>
+            modelBuilder.Entity("Blue.Data.Models.Media", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -385,7 +372,7 @@ namespace Blue.Api.Migrations
                     b.ToTable("Media");
                 });
 
-            modelBuilder.Entity("Blue.Model.Product", b =>
+            modelBuilder.Entity("Blue.Data.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -427,14 +414,12 @@ namespace Blue.Api.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("Blue.Model.ProductCategory", b =>
+            modelBuilder.Entity("Blue.Data.Models.ProductCategory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<long>("CategoryId");
-
-                    b.Property<Guid?>("CategoryId1");
 
                     b.Property<string>("CreatedBy");
 
@@ -456,14 +441,12 @@ namespace Blue.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId1");
-
                     b.HasIndex("ProductId1");
 
                     b.ToTable("ProductCategory");
                 });
 
-            modelBuilder.Entity("Blue.Model.ProductMedia", b =>
+            modelBuilder.Entity("Blue.Data.Models.ProductMedia", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -497,87 +480,72 @@ namespace Blue.Api.Migrations
                     b.ToTable("ProductMedia");
                 });
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.RoleClaim", b =>
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.RoleClaim", b =>
                 {
-                    b.HasOne("Blue.Data.IdentityModel.Role", "Role")
+                    b.HasOne("Blue.Data.Models.IdentityModel.Role", "Role")
                         .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.UserClaim", b =>
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.UserClaim", b =>
                 {
-                    b.HasOne("Blue.Data.IdentityModel.User", "User")
+                    b.HasOne("Blue.Data.Models.IdentityModel.User", "User")
                         .WithMany("UserClaims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.UserLogin", b =>
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.UserLogin", b =>
                 {
-                    b.HasOne("Blue.Data.IdentityModel.User")
+                    b.HasOne("Blue.Data.Models.IdentityModel.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.UserRole", b =>
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.UserRole", b =>
                 {
-                    b.HasOne("Blue.Data.IdentityModel.Role", "Role")
+                    b.HasOne("Blue.Data.Models.IdentityModel.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Blue.Data.IdentityModel.User", "User")
+                    b.HasOne("Blue.Data.Models.IdentityModel.User", "User")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Blue.Data.IdentityModel.UserToken", b =>
+            modelBuilder.Entity("Blue.Data.Models.IdentityModel.UserToken", b =>
                 {
-                    b.HasOne("Blue.Data.IdentityModel.User")
+                    b.HasOne("Blue.Data.Models.IdentityModel.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Blue.Model.Category", b =>
+            modelBuilder.Entity("Blue.Data.Models.Product", b =>
                 {
-                    b.HasOne("Blue.Model.Category", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId1");
-
-                    b.HasOne("Blue.Model.Media", "ThumbnailImage")
+                    b.HasOne("Blue.Data.Models.Media", "ThumbnailImage")
                         .WithMany()
                         .HasForeignKey("ThumbnailImageId");
                 });
 
-            modelBuilder.Entity("Blue.Model.Product", b =>
+            modelBuilder.Entity("Blue.Data.Models.ProductCategory", b =>
                 {
-                    b.HasOne("Blue.Model.Media", "ThumbnailImage")
-                        .WithMany()
-                        .HasForeignKey("ThumbnailImageId");
-                });
-
-            modelBuilder.Entity("Blue.Model.ProductCategory", b =>
-                {
-                    b.HasOne("Blue.Model.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId1");
-
-                    b.HasOne("Blue.Model.Product", "Product")
+                    b.HasOne("Blue.Data.Models.Product", "Product")
                         .WithMany("Categories")
                         .HasForeignKey("ProductId1");
                 });
 
-            modelBuilder.Entity("Blue.Model.ProductMedia", b =>
+            modelBuilder.Entity("Blue.Data.Models.ProductMedia", b =>
                 {
-                    b.HasOne("Blue.Model.Media", "Media")
+                    b.HasOne("Blue.Data.Models.Media", "Media")
                         .WithMany()
                         .HasForeignKey("MediaId1");
 
-                    b.HasOne("Blue.Model.Product", "Product")
+                    b.HasOne("Blue.Data.Models.Product", "Product")
                         .WithMany("Medias")
                         .HasForeignKey("ProductId1");
                 });

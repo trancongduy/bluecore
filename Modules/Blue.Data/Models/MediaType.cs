@@ -1,4 +1,4 @@
-﻿namespace Blue.Model
+﻿namespace Blue.Data.Models
 {
     public enum MediaType
     {

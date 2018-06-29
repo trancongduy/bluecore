@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Framework.Data.Models;
 
-namespace Framework.Data.Models
+namespace Framework.Data.SeedWork
 {
     public static class GlobalConfiguration
     {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Blue.Data.IdentityModel;
+using Blue.Data.Models.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 

@@ -2,9 +2,9 @@
 using Framework.Constract.Constant;
 using Framework.Constract.SeedWork;
 
-namespace Blue.Model
+namespace Blue.Data.Models
 {
-    public class Audit : BaseEntity
+    public class AuditTrail : BaseEntity
     {
         // A new SessionId that will be used to link an entire
         // users "Session" of Audit Logs together to help 

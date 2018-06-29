@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Blue.Constract.Dtos;
-using Blue.Model;
+using Blue.Data.Models;
 
 namespace Blue.Converter
 {
@@ -8,7 +8,7 @@ namespace Blue.Converter
     {
         public DtoToEntityProfile()
         {
-            CreateMap<Audit, AuditDto>();
+            CreateMap<AuditTrail, AuditDto>();
         }
     }
 }

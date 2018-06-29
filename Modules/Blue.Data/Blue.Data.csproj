@@ -12,7 +12,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\Framework.Constract\Framework.Constract.csproj" />
     <ProjectReference Include="..\..\Framework\Framework.Data\Framework.Data.csproj" />
-    <ProjectReference Include="..\Blue.Model\Blue.Model.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="Microsoft.NETCore.App" />

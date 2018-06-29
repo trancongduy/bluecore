@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
-using Blue.Data.IdentityModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using Blue.Data.Models.IdentityModel;
 
 namespace Blue.Data.IdentityService
 {

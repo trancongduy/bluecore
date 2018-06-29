@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace Blue.Data.IdentityModel
+namespace Blue.Data.Models.IdentityModel
 {
     public class UserRole : IdentityUserRole<Guid>
     {

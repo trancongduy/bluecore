@@ -16,8 +16,8 @@ using Framework.Common.Middlewares;
 using Framework.Constract.SeedWork;
 using Framework.Constract.Constant;
 using Blue.Data;
-using Blue.Data.IdentityModel;
 using Blue.Data.IdentityService;
+using Blue.Data.Models.IdentityModel;
 
 namespace Blue.IdentityServer
 {

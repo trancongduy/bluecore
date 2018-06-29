@@ -17,8 +17,8 @@ using Framework.Constract.Interfaces;
 using Framework.Data.Models;
 using Framework.Data.SeedWork;
 using Blue.Data;
-using Blue.Data.IdentityModel;
 using Blue.Data.IdentityService;
+using Blue.Data.Models.IdentityModel;
 using Framework.Data.Interfaces;
 using IdentityServer4.Services;
 using IMapper = Framework.Constract.Interfaces.IMapper;
@@ -165,7 +165,7 @@ namespace Blue.Api.Extensions
             builder.RegisterGeneric(typeof(BaseRepository<>)).As(typeof(IRepository<>));
             //builder.RegisterModule(new IdentityConfigModule());
             //builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
-		    builder.RegisterType<AuditAttribute>().InstancePerLifetimeScope();
+		    builder.RegisterType<AuditAttribute>().InstancePerRequest();
 
             foreach (var module in GlobalConfiguration.Modules)
 			{

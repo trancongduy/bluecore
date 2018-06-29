@@ -1,6 +1,6 @@
 ﻿using System;
 using Blue.Constract.Dtos;
-using Blue.Model;
+using Blue.Data.Models;
 using Framework.Constract.Constant;
 using Framework.Constract.Interfaces;
 using Framework.Data.SeedWork;
@@ -10,21 +10,21 @@ using Newtonsoft.Json;
 
 namespace Blue.DomainService
 {
-    public interface IAuditService : IService<Audit, AuditDto>
+    public interface IAuditService : IService<AuditTrail, AuditDto>
     {
         void AddAuthenticationEvent(Event evt);
     }
 
-    public class AuditService : Service<Audit, AuditDto>, IAuditService
+    public class AuditService : Service<AuditTrail, AuditDto>, IAuditService
     {
-        private readonly IRepository<Audit> _auditRepository;
+        private readonly IRepository<AuditTrail> _auditRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AuditService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(
             unitOfWork, mapper)
         {
             _httpContextAccessor = httpContextAccessor;
-            _auditRepository = unitOfWork.Repository<Audit>();
+            _auditRepository = unitOfWork.Repository<AuditTrail>();
         }
 
         public void AddAuthenticationEvent(Event evt)
@@ -32,7 +32,7 @@ namespace Blue.DomainService
             var audit = new AuditDto
             {
                 ExternalIpAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString(),
-                TimeStamp = DateTime.UtcNow,
+                TimeStamp = DateTimeOffset.Now,
                 CreatedBy = UserType.SystemGenerated,
                 AudittingLevel = (int) AudittingLevel.Middle,
                 UserAction = UserAction.Login,

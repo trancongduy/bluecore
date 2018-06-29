@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace Blue.Data.IdentityModel
+namespace Blue.Data.Models.IdentityModel
 {
     public class RoleStore : RoleStore<Role, BlueDbContext, Guid, UserRole, RoleClaim>
     {

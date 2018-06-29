@@ -1,4 +1,4 @@
-﻿using Blue.Data.IdentityModel;
+﻿using Blue.Data.Models.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;

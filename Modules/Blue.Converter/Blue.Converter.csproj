@@ -8,7 +8,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Blue.Constract\Blue.Constract.csproj" />
     <ProjectReference Include="..\Blue.Data\Blue.Data.csproj" />
-    <ProjectReference Include="..\Blue.Model\Blue.Model.csproj" />
   </ItemGroup>
 
   <ItemGroup>

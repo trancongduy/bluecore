@@ -67,7 +67,7 @@ namespace Blue.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Audit",
+                name: "AuditTrail",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -88,7 +88,28 @@ namespace Blue.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Audit", x => x.Id);
+                    table.PrimaryKey("PK_AuditTrail", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Component",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(nullable: false),
+                    UpdatedBy = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Translate = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    Icon = table.Column<string>(nullable: true),
+                    Url = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Component", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -247,43 +268,6 @@ namespace Blue.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Category",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    SeoTitle = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(maxLength: 5000, nullable: true),
-                    DisplayOrder = table.Column<int>(nullable: false),
-                    IsPublished = table.Column<bool>(nullable: false),
-                    IncludeInMenu = table.Column<bool>(nullable: false),
-                    ParentId = table.Column<long>(nullable: true),
-                    ParentId1 = table.Column<Guid>(nullable: true),
-                    ThumbnailImageId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Category", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Category_Category_ParentId1",
-                        column: x => x.ParentId1,
-                        principalTable: "Category",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Category_Media_ThumbnailImageId",
-                        column: x => x.ThumbnailImageId,
-                        principalTable: "Media",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Product",
                 columns: table => new
                 {
@@ -329,18 +313,11 @@ namespace Blue.Api.Migrations
                     DisplayOrder = table.Column<int>(nullable: false),
                     CategoryId = table.Column<long>(nullable: false),
                     ProductId = table.Column<long>(nullable: false),
-                    CategoryId1 = table.Column<Guid>(nullable: true),
                     ProductId1 = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductCategory", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductCategory_Category_CategoryId1",
-                        column: x => x.CategoryId1,
-                        principalTable: "Category",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ProductCategory_Product_ProductId1",
                         column: x => x.ProductId1,
@@ -387,9 +364,9 @@ namespace Blue.Api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "CreatedBy", "CreatedDate", "Description", "IsDeleted", "Name", "NormalizedName", "UpdatedBy", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("5a61f008-0ce1-4b60-8c0c-c12c721e475d"), "b949ec9d-54a2-41a8-90a9-eb04497a8de6", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 30, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), null, false, "admin", "ADMIN", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 32, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) },
-                    { new Guid("7a749297-4edf-4d16-a769-d3bada83247e"), "1781ea63-23e9-44c2-b2ec-67ff041991e8", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 32, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), null, false, "customer", "CUSTOMER", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 32, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) },
-                    { new Guid("61f3dc6e-3863-40e5-ba2b-a6334b5590ac"), "4417f3ca-34fb-4660-a8d7-1ddfd0e9cab4", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 32, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), null, false, "guest", "GUEST", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 32, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) }
+                    { new Guid("5a61f008-0ce1-4b60-8c0c-c12c721e475d"), "ee1e5ccb-a64e-4bb5-bdae-48dea1c74d7f", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 830, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), null, false, "admin", "ADMIN", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 832, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) },
+                    { new Guid("7a749297-4edf-4d16-a769-d3bada83247e"), "4ac4b839-9ad4-42b6-86fa-3832e4cf7960", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 832, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), null, false, "customer", "CUSTOMER", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 832, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) },
+                    { new Guid("61f3dc6e-3863-40e5-ba2b-a6334b5590ac"), "a2a4daa3-f29b-4e2a-a7f0-a1adf4976d3b", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 832, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), null, false, "guest", "GUEST", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 832, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)) }
                 });
 
             migrationBuilder.InsertData(
@@ -397,8 +374,8 @@ namespace Blue.Api.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "CreatedBy", "CreatedDate", "Email", "EmailConfirmed", "FirstName", "IsDeleted", "IsLocked", "LastName", "LockedDate", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RememberMe", "SecurityStamp", "ShouldLockout", "TwoFactorEnabled", "UnLockedDate", "UpdatedBy", "UpdatedDate", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("53319368-f467-4d49-a1b0-8da303b6c24a"), 0, null, "ba119b6c-6b66-46a0-9bff-ef81eaff91dd", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 33, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), "system@gmail.com", false, "System", true, false, "Administrator", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), false, null, "SYSTEM@SIMPLCOMMERCE.COM", "SYSTEMADMIN", "AQAAAAEAACcQAAAAEFB+UXfZPfZvMWdDDl9SSWPNDoKKBpBASb/CzK/rmWu/OlE15ALyEAY/QKP4jEkRyg==", null, false, false, "ef21d984-9ddd-40d3-8ad3-caf1cf7009bf", false, false, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 33, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), "systemadmin" },
-                    { new Guid("55e816d6-34e1-4a1c-9940-4bc5381b21b8"), 0, null, "9bd89126-8051-4401-87be-b7a5ae0daf43", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 33, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), "admin@gmail.com", false, "Shop", false, false, "Admin", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEFB+UXfZPfZvMWdDDl9SSWPNDoKKBpBASb/CzK/rmWu/OlE15ALyEAY/QKP4jEkRyg==", null, false, false, "8bfd037b-da79-4f77-a20b-2c7cdb276293", false, false, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 25, 18, 20, 26, 33, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), "admin" }
+                    { new Guid("53319368-f467-4d49-a1b0-8da303b6c24a"), 0, null, "43db0e60-cce8-48aa-8416-73a5a9c8cec8", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 833, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), "system@gmail.com", false, "System", true, false, "Administrator", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), false, null, "SYSTEM@SIMPLCOMMERCE.COM", "SYSTEMADMIN", "AQAAAAEAACcQAAAAEFB+UXfZPfZvMWdDDl9SSWPNDoKKBpBASb/CzK/rmWu/OlE15ALyEAY/QKP4jEkRyg==", null, false, false, "5b8abe7f-b1e8-4c6a-90a8-9e96c2467ad2", false, false, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 833, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), "systemadmin" },
+                    { new Guid("55e816d6-34e1-4a1c-9940-4bc5381b21b8"), 0, null, "d10bb189-b82f-4cb0-9841-eeaa3e31b4f2", "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 833, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), "admin@gmail.com", false, "Shop", false, false, "Admin", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEFB+UXfZPfZvMWdDDl9SSWPNDoKKBpBASb/CzK/rmWu/OlE15ALyEAY/QKP4jEkRyg==", null, false, false, "2ce5eb19-6f1e-4112-a50a-49e6b8925ef4", false, false, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "systemadmin", new DateTimeOffset(new DateTime(2018, 6, 29, 14, 48, 11, 833, DateTimeKind.Unspecified), new TimeSpan(0, 7, 0, 0, 0)), "admin" }
                 });
 
             migrationBuilder.InsertData(
@@ -446,24 +423,9 @@ namespace Blue.Api.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Category_ParentId1",
-                table: "Category",
-                column: "ParentId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Category_ThumbnailImageId",
-                table: "Category",
-                column: "ThumbnailImageId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Product_ThumbnailImageId",
                 table: "Product",
                 column: "ThumbnailImageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductCategory_CategoryId1",
-                table: "ProductCategory",
-                column: "CategoryId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductCategory_ProductId1",
@@ -499,7 +461,10 @@ namespace Blue.Api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Audit");
+                name: "AuditTrail");
+
+            migrationBuilder.DropTable(
+                name: "Component");
 
             migrationBuilder.DropTable(
                 name: "Contact");
@@ -515,9 +480,6 @@ namespace Blue.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Category");
 
             migrationBuilder.DropTable(
                 name: "Product");

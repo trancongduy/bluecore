@@ -1,4 +1,4 @@
-﻿using Blue.Model;
+﻿using Blue.Data.Models;
 using Framework.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

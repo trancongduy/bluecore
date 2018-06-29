@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Blue.Constract.ViewModels.Account;
-using Blue.Data.IdentityModel;
 using Blue.Data.IdentityService;
+using Blue.Data.Models.IdentityModel;
 using Framework.Infrastructure.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

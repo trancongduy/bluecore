@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Blue.Data.IdentityModel;
+using Blue.Data.Models.IdentityModel;
 using Framework.Data.Interfaces;
 
 namespace Blue.Data.MappingEntity
