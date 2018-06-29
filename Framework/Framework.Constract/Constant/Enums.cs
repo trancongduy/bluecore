@@ -17,13 +17,13 @@
     public enum UserAction
     {
         Login = 1,
-        View = 2,
-        Create = 3,
-        Update = 4,
-        Delete = 5,
-        Import = 6,
-        Export = 7,
-        Logout = 8
+        Logout = 2,
+        View = 4,
+        Create = 8,
+        Update = 16,
+        Delete = 32,
+        Import = 64,
+        Export = 128
     }
 
     public enum RequestState
