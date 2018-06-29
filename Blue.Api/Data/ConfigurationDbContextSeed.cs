@@ -2,9 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Mappers;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Blue.Api.Data
@@ -15,17 +13,12 @@ namespace Blue.Api.Data
         {
 
             //callbacks urls from config:
-            var clientUrls = new Dictionary<string, string>();
+            var clientUrls = new Dictionary<string, string>
+            {
+                {"Mvc", configuration.GetValue<string>("MvcClient")},
+                {"Spa", configuration.GetValue<string>("SpaClient")}
+            };
 
-            clientUrls.Add("Mvc", configuration.GetValue<string>("MvcClient"));
-            clientUrls.Add("Spa", configuration.GetValue<string>("SpaClient"));
-            clientUrls.Add("Xamarin", configuration.GetValue<string>("XamarinCallback"));
-            clientUrls.Add("LocationsApi", configuration.GetValue<string>("LocationApiClient"));
-            clientUrls.Add("MarketingApi", configuration.GetValue<string>("MarketingApiClient"));
-            clientUrls.Add("BasketApi", configuration.GetValue<string>("BasketApiClient"));
-            clientUrls.Add("OrderingApi", configuration.GetValue<string>("OrderingApiClient"));
-            clientUrls.Add("MobileShoppingAgg", configuration.GetValue<string>("MobileShoppingAggClient"));
-            clientUrls.Add("WebShoppingAgg", configuration.GetValue<string>("WebShoppingAggClient"));
 
             if (!context.Clients.Any())
             {
@@ -34,27 +27,6 @@ namespace Blue.Api.Data
                     context.Clients.Add(client.ToEntity());
                 }
                 await context.SaveChangesAsync();
-            }
-            // Checking always for old redirects to fix existing deployments
-            // to use new swagger-ui redirect uri as of v3.0.0
-            // There should be no problem for new ones
-            // ref: https://github.com/dotnet-architecture/eShopOnContainers/issues/586
-            else
-            {
-                List<ClientRedirectUri> oldRedirects = (await context.Clients.Include(c => c.RedirectUris).ToListAsync())
-                    .SelectMany(c => c.RedirectUris)
-                    .Where(ru => ru.RedirectUri.EndsWith("/o2c.html"))
-                    .ToList();
-
-                if (oldRedirects.Any())
-                {
-                    foreach (var ru in oldRedirects)
-                    {
-                        ru.RedirectUri = ru.RedirectUri.Replace("/o2c.html", "/oauth2-redirect.html");
-                        context.Update(ru.Client);
-                    }
-                    await context.SaveChangesAsync();
-                }
             }
 
             if (!context.IdentityResources.Any())
