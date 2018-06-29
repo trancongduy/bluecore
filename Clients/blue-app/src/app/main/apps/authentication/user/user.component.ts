@@ -153,7 +153,6 @@ export class UserComponent implements OnInit, OnDestroy
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if ( result )
             {
-                debugger;
                 this._userService.deleteUser(this.user);
                 this._router.navigate(['/apps/authentication/users']);
             }

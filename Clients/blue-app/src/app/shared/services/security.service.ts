@@ -7,6 +7,7 @@ import { Router }                       from '@angular/router';
 import { ActivatedRoute }               from '@angular/router';
 import { ConfigurationService }         from './configuration.service';
 import { StorageService }               from './storage.service';
+import { Configuration }                from 'app/app.constants';
 
 @Injectable()
 export class SecurityService {
@@ -18,16 +19,23 @@ export class SecurityService {
     authenticationChallenge$ = this.authenticationSource.asObservable();
     private authorityUrl = '';
 
-    constructor(private _http: Http, private _router: Router, private route: ActivatedRoute, private _configurationService: ConfigurationService, private _storageService: StorageService) {
+    constructor(private _http: Http, 
+                private _router: Router, 
+                private route: ActivatedRoute, 
+                private _storageService: StorageService,
+                private _configuration: Configuration) {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
         this.storage = _storageService;
 
-        this._configurationService.settingsLoaded$.subscribe(x => {
-            this.authorityUrl = this._configurationService.serverSettings.identityUrl
-            this.storage.store('IdentityUrl', this.authorityUrl);
-        });
+        // this._configurationService.settingsLoaded$.subscribe(x => {
+        //     this.authorityUrl = this._configurationService.serverSettings.identityUrl
+        //     this.storage.store('IdentityUrl', this.authorityUrl);
+        // });
+
+        this.authorityUrl = _configuration.IdentityServer;
+        this.storage.store('IdentityUrl', this.authorityUrl);
 
         if (this.storage.retrieve('IsAuthorized') !== '') {
             this.IsAuthorized = this.storage.retrieve('IsAuthorized');

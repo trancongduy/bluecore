@@ -15,6 +15,7 @@ import { locale as navigationVietnamese } from 'app/navigation/i18n/vi';
 
 import { SecurityService } from 'app/shared/services/security.service';
 import { ConfigurationService } from 'app/shared/services/configuration.service';
+import { Configuration } from './app.constants';
 
 @Component({
     selector   : 'app',
@@ -49,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
         private _securityService: SecurityService,
-        private _configurationService: ConfigurationService,
+        private _configurationService: ConfigurationService
     )
     {
         this.Authenticated = this._securityService.IsAuthorized;
@@ -96,11 +97,21 @@ export class AppComponent implements OnInit, OnDestroy
                 this.fuseConfig = config;
             });
 
-        this.subscription = this._securityService.authenticationChallenge$.subscribe(res => this.Authenticated = res);
+        this.subscription = this._securityService.authenticationChallenge$.subscribe(res => 
+            this.Authenticated = res
+        );
 
         //Get configuration from server environment variables:
-        console.log('configuration');
-        this._configurationService.load();       
+        // console.log('configuration');
+        // this._configurationService.load();       
+
+        if (window.location.hash) {
+            this._securityService.AuthorizedCallback();
+        }
+
+        if (this.Authenticated !== true) {
+            this.login();
+        }
     }
 
     /**
@@ -125,5 +136,9 @@ export class AppComponent implements OnInit, OnDestroy
     toggleSidebarOpen(key): void
     {
         this._fuseSidebarService.getSidebar(key).toggleOpen();
+    }
+
+    login() {
+        this._securityService.Authorize();
     }
 }

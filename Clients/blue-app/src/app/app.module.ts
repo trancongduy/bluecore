@@ -19,6 +19,8 @@ import { FakeDbService } from 'app/fake-db/fake-db.service';
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { HomeModule } from 'app/main/pages/home/home.module';
+import { SharedModule } from 'app/shared/shared.module';
+import { Configuration } from 'app/app.constants';
 
 
 const appRoutes: Routes = [
@@ -61,9 +63,15 @@ const appRoutes: Routes = [
         FuseSidebarModule,
         FuseThemeOptionsModule,
 
+        // Only module that app module loads
+        SharedModule.forRoot(),
+
         // App modules
         LayoutModule,
         HomeModule
+    ],
+    providers: [
+        Configuration
     ],
     bootstrap   : [
         AppComponent

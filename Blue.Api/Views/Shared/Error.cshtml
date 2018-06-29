@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@model Blue.Api.Models.ErrorViewModel
+@inject IHostingEnvironment host
+
+@{
+    var error = Model?.Error?.Error;
+    var errorDescription = host.IsDevelopment() ? Model?.Error?.ErrorDescription : null;
+    var request_id = Model?.Error?.RequestId;
+}
+
+<div id="wrapper">
+    <div class="content-wrapper">
+        <div class="content custom-scrollbar">
+            <div id="error-500" class="d-flex flex-column align-items-center justify-content-center">
+                <div class="content">
+                    <div class="error-code display-1 text-center">401</div>
+                    <div class="message h4 text-center text-muted">@error</div>
+                    <div class="sub-message h6 mt-4 mb-12 text-center text-muted">
+                        @errorDescription
+                    </div>
+                    <a class="report-link d-block text-center text-light-blue-600" href="/">Report this problem</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

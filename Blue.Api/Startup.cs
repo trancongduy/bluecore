@@ -131,13 +131,14 @@ namespace Blue.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
-                app.UseHsts();
+                app.UseExceptionHandler("/Home/Error");
             }
 
-			app.UseStaticFiles();
+            app.UseStaticFiles();
 
             // Enable the Swagger UI middleware and the Swagger generator
             app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>
@@ -171,7 +172,13 @@ namespace Blue.Api
             app.UseIdentityServer();
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
