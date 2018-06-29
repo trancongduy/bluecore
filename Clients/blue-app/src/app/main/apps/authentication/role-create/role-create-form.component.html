@@ -1,0 +1,47 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{'ROLE.TITLE' | translate}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+
+        <form [formGroup]="roleForm">
+            <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field fxFlex>
+                    <input name="code" formControlName="code" placeholder="{{'ROLE.CODE' | translate}}" matInput required>
+                </mat-form-field>
+            </div>
+
+            <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field fxFlex>
+                    <input name="name" formControlName="name" placeholder="{{'ROLE.NAME' | translate}}" matInput required>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
+                <mat-form-field fxFlex>
+                    <textarea name="description" formControlName="description" placeholder="{{'ROLE.DESCRIPTION' | translate}}" matInput type="text"
+                              max-rows="4"></textarea>
+                </mat-form-field>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+
+        <button mat-raised-button
+                (click)="submitRole(roleForm)"
+                class="save-button mat-accent"
+                [disabled]="roleForm.invalid"
+                aria-label="Add">
+            {{'ROLE.ADD' | translate}}
+        </button>
+    </div>
+</div>

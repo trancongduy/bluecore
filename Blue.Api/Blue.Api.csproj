@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RuntimeFrameworkVersion>2.1.1</RuntimeFrameworkVersion>
+    <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
+    <UserSecretsId>aspnet-Blue.Web-E012496D-7857-4BCF-A7A3-5F321718859E</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
+    <PackageReference Include="IdentityServer4" Version="2.2.0" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.6.0" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.1.0" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.0" />
+    <PackageReference Include="NSwag.AspNetCore" Version="11.17.18" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Modules\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Infrastructure\Framework.Infrastructure.csproj" />
+    <ProjectReference Include="..\Framework\Framework.Constract\Framework.Constract.csproj" />
+    <ProjectReference Include="..\Framework\Framework.Data\Framework.Data.csproj" />
+    <ProjectReference Include="..\Modules\Blue.Constract\Blue.Constract.csproj" />
+    <ProjectReference Include="..\Modules\Blue.Converter\Blue.Converter.csproj" />
+    <ProjectReference Include="..\Modules\Blue.Data\Blue.Data.csproj" />
+    <ProjectReference Include="..\Modules\Blue.DomainService\Blue.DomainService.csproj" />
+    <ProjectReference Include="..\WebHost.Customization\WebHost.Customization.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NETCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Migrations\20170927092212_InitialSchema.Designer.cs" />
+    <Compile Remove="Migrations\20170927092212_InitialSchema.cs" />
+    <Compile Remove="Migrations\20180603150156_InitialDatabase.cs" />
+    <Compile Remove="Migrations\20180603150156_InitialDatabase.Designer.cs" />
+  </ItemGroup>
+</Project>

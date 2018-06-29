@@ -1,0 +1,6 @@
+{
+  "name": "domain-service",
+  "fullName": "Blue.DomainService",
+  "isBundledWithHost": false,
+  "version": "1.0.0"
+}

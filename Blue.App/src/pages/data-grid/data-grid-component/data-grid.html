@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>DevExtreme Data Grid</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+  <dx-data-grid 
+  [dataSource]="gridDataSource"
+  [remoteOperations]="true"
+  [customizeColumns]="customizeColumns">     
+    <dxo-export [enabled]="true"></dxo-export> 
+    <dxo-editing
+      mode="row"
+      [allowUpdating]="true"
+      [allowDeleting]="true"
+      [allowAdding]="true">
+      <dxo-texts [confirmDeleteMessage]="Test"></dxo-texts>
+  </dxo-editing>
+  </dx-data-grid>
+
+  <dx-button
+    text="Delete Row"
+    (onClick)="deleteRow()">
+  </dx-button>
+
+  <dx-button text="Save Changes" (onClick)="saveChange()"></dx-button>
+</ion-content>

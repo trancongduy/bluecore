@@ -1,0 +1,17 @@
+﻿<Properties StartupConfiguration="{565EB1BB-AB0E-4D06-B975-9ADD37CE43AF}|Default">
+  <MonoDevelop.Ide.ItemProperties.Clients.Blue.Web PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Blue.Api PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Blue.IdentityServer/appsettings.json">
+    <Files>
+      <File FileName="Blue.IdentityServer/Startup.cs" Line="52" Column="60" />
+      <File FileName="Blue.IdentityServer/appsettings.json" Line="16" Column="15" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|Android" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.Blue.IdentityServer PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>

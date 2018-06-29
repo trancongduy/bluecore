@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Dashboard</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content class="dashboard-page">
+    <ion-slides pager>
+        <ion-slide>
+            <ion-toolbar>
+                <ion-buttons end>
+                    <button ion-button (click)=openPage()>Skip</button>
+                </ion-buttons>
+            </ion-toolbar>
+            <ion-card>
+                <ion-card-header>
+                    <h2>Project 1 - Effective Evaluation</h2>
+                </ion-card-header>
+                <ion-card-content>
+                    <canvas #pieCanvas1></canvas>
+                </ion-card-content>
+            </ion-card>
+            <ion-card>
+                <ion-card-header>
+                    <h2>Project 1 - Bar Chart</h2>
+                </ion-card-header>
+                <ion-card-content>
+                    <canvas #barCanvas1></canvas>
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+        <ion-slide>
+            <ion-toolbar>
+                <ion-buttons end>
+                    <button ion-button (click)=openPage()>Skip</button>
+                </ion-buttons>
+            </ion-toolbar>
+            <ion-card>
+                <ion-card-header>
+                    <h2>Project 2 - Effective Evaluation</h2>
+                </ion-card-header>
+                <ion-card-content>
+                    <canvas #pieCanvas2></canvas>
+                </ion-card-content>
+            </ion-card>
+            <ion-card>
+                <ion-card-header>
+                    <h2>Project 2 - Bar Chart</h2>
+                </ion-card-header>
+                <ion-card-content>
+                    <canvas #barCanvas2></canvas>
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+</ion-content>

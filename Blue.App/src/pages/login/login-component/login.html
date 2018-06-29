@@ -1,0 +1,25 @@
+<ion-content scroll="false" class="page-welcome">
+  <div class="splash-bg"></div>
+  <div class="splash-info">
+    <div class="splash-logo"></div>
+    <div class="splash-intro">
+      <span>Blue App</span>
+    </div>
+  </div>
+  <div>
+    <ion-item>
+      <ion-input type="text" placeholder="Username" [(ngModel)]="loginInputModel.username"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="password" placeholder="Password" [(ngModel)]="loginInputModel.password"></ion-input>
+    </ion-item>
+  </div>
+  <div padding>
+    <button ion-button color="primary" block (click)="basedToken()">Based Token</button>
+    <button ion-button color="primary" block (click)="ownerPassword()">Owner Password Token</button>
+    <button ion-button color="primary" block (click)="implicitFlow()">Implicit Flow</button>
+    <button ion-button color="primary" block (click)="hybridFlow()">Hybrid Flow</button>
+    <button ion-button color="primary" block (click)="redirectHome()">Home Page</button>
+  </div>
+</ion-content>

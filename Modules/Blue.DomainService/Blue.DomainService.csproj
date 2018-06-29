@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RuntimeFrameworkVersion>2.1.1</RuntimeFrameworkVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="2.2.0" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Framework.Constract\Framework.Constract.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Data\Framework.Data.csproj" />
+    <ProjectReference Include="..\Blue.Constract\Blue.Constract.csproj" />
+    <ProjectReference Include="..\Blue.Data\Blue.Data.csproj" />
+    <ProjectReference Include="..\Blue.Model\Blue.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NETCore.App" />
+  </ItemGroup>
+
+</Project>

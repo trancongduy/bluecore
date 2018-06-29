@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "name": "bluecore",
+  "private": true,
+  "devDependencies": {
+    "glob": "7.1.2",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2"
+  }
+}

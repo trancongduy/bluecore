@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+    <ion-buttons right>
+      <button ion-button (click)="reload()">Load</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Ionic Menu Starter</h3>
+
+  <div class="claims">
+    <strong>Claims from Identity Token JWT:</strong>
+    <pre>{{claims | json}}</pre>
+  </div>
+
+  <button ion-button secondary (click)="database()">Database</button>
+  <button ion-button secondary (click)="showInfo()">Show Info</button>
+  <button ion-button secondary (click)="refreshToken()">Refresh Token</button>
+  <button ion-button color="primary" (click)="logout()">Logout</button>
+
+  <p>access_token: {{accessToken}}</p>
+  <p>expires_in: {{accessTokenExpiration}}</p>
+  <p>{{idToken}}</p>
+  <p>expires_in: {{idTokenExpiration}}</p>
+</ion-content>
