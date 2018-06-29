@@ -47,7 +47,7 @@ namespace Framework.Common.Middlewares
             result.ErrorMessages.Add(new ValidationError
             {
                 Error = exception.Message,
-                InnerException = exception.InnerException.Message,
+                InnerException = exception.InnerException?.Message,
                 StackTrace = exception.StackTrace
             });
 
