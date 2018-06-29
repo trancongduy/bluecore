@@ -22,7 +22,6 @@ export class ConfigurationService {
     constructor(private http: Http, private storageService: StorageService) { }
     
     load() {
-        debugger;
         const baseURI = document.baseURI.endsWith('/') ? document.baseURI : `${document.baseURI}/`;
         let url = `${baseURI}Home/Configuration`;
         this.http.get(url).subscribe((response: Response) => {
