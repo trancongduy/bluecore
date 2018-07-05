@@ -77,7 +77,8 @@ namespace Blue.Api
                         "locations",
                         "marketing",
                         "webshoppingagg",
-                        "orders.signalrhub"
+                        "orders.signalrhub",
+                        "blue_api"
                     }
                 },
 

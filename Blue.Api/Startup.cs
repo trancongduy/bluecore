@@ -5,7 +5,6 @@ using Blue.Api.Extensions;
 using Blue.Data.IdentityService;
 using Blue.DomainService;
 using Framework.Common.Middlewares;
-using Framework.Data.Models;
 using Framework.Data.SeedWork;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

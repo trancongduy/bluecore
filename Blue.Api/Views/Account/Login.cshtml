@@ -1,0 +1,58 @@
+﻿@model Blue.Api.Models.AccountViewModel.LoginViewModel
+
+<div id="wrapper">
+    <div class="content-wrapper">
+        <div class="content custom-scrollbar">
+
+            <div id="login" class="p-8">
+
+                <div class="form-wrapper md-elevation-8 p-8">
+
+                    <div class="logo">
+                        <img src="~/assets/images/logos/fuse.svg" alt="Fuse Logo" />
+                    </div>
+
+                    <div class="title mt-4 mb-8">LOGIN TO YOUR ACCOUNT</div>
+
+                    <form name="loginForm" novalidate>
+
+                        <div class="form-group mb-4">
+                            <input type="email" class="form-control" id="loginFormInputEmail" aria-describedby="emailHelp" placeholder=" " />
+                            <label for="loginFormInputEmail">Username</label>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <input type="password" class="form-control" id="loginFormInputPassword" placeholder="Password" />
+                            <label for="loginFormInputPassword">Password</label>
+                        </div>
+
+                        <div class="remember-forgot-password row no-gutters align-items-center justify-content-between pt-4">
+
+                            <div class="form-check remember-me mb-4">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" aria-label="Remember Me" />
+                                    <span class="checkbox-icon"></span>
+                                    <span class="form-check-description">Remember Me</span>
+                                </label>
+                            </div>
+
+                            <a href="#" class="forgot-password text-secondary mb-4">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="submit-button btn btn-block btn-secondary my-4 mx-auto" aria-label="LOG IN">
+                            LOG IN
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<nav id="footer" class="bg-dark text-auto row no-gutters align-items-center px-6">
+    <a class="btn btn-secondary text-capitalize" href="http://themeforest.net/item/fuse-angularjs-material-design-admin-template/12931855?ref=srcn" target="_blank">
+        <i class="icon icon-cart mr-2 s-4"></i>Purchase FUSE Bootstrap
+    </a>
+</nav>

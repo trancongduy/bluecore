@@ -15,7 +15,6 @@ namespace Blue.Api.Data
             //callbacks urls from config:
             var clientUrls = new Dictionary<string, string>
             {
-                {"Mvc", configuration.GetValue<string>("MvcClient")},
                 {"Spa", configuration.GetValue<string>("SpaClient")}
             };
 
