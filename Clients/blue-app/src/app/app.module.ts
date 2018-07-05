@@ -17,28 +17,37 @@ import { fuseConfig } from 'app/fuse-config';
 
 import { FakeDbService } from 'app/fake-db/fake-db.service';
 import { AppComponent } from 'app/app.component';
-import { LayoutModule } from 'app/layout/layout.module';
-import { HomeModule } from 'app/main/pages/home/home.module';
-import { SharedModule } from 'app/shared/shared.module';
 import { Configuration } from 'app/app.constants';
 
+import { LayoutModule } from 'app/layout/layout.module';
+import { SharedModule } from 'app/shared/shared.module';
+import { PagesModule } from './main/pages/pages.module';
 
 const appRoutes: Routes = [
     {
-        path        : 'apps',
+        path: 'apps',
         loadChildren: './main/apps/apps.module#AppsModule'
     },
     {
-        path      : '**',
-        redirectTo: 'home'
-    }    
+        path: 'pages',
+        loadChildren: './main/pages/pages.module#PagesModule'
+    },
+    {
+        path: '',
+        redirectTo: 'auth/login',
+        pathMatch: 'full'
+    },
+    {
+        path: '**',
+        redirectTo: 'errors/error-404'
+    }
 ];
 
 @NgModule({
     declarations: [
         AppComponent
     ],
-    imports     : [
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -46,7 +55,7 @@ const appRoutes: Routes = [
 
         TranslateModule.forRoot(),
         InMemoryWebApiModule.forRoot(FakeDbService, {
-            delay             : 0,
+            delay: 0,
             passThruUnknownUrl: true
         }),
 
@@ -68,15 +77,14 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        HomeModule
+        PagesModule
     ],
     providers: [
         Configuration
     ],
-    bootstrap   : [
+    bootstrap: [
         AppComponent
     ]
 })
-export class AppModule
-{
+export class AppModule {
 }

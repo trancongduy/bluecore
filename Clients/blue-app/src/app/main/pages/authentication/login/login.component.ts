@@ -37,6 +37,9 @@ export class LoginComponent implements OnInit, OnDestroy
                 navbar : {
                     hidden: true
                 },
+                themeOptions: {
+                    hidden: true
+                },
                 toolbar: {
                     hidden: true
                 },

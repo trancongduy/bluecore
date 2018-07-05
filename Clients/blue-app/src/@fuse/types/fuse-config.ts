@@ -13,7 +13,10 @@ export interface FuseConfig
             hidden: boolean,
             position: 'above' | 'above-static' | 'above-fixed' | 'below' | 'below-static' | 'below-fixed',
             background: string
-        }
+        },
+        themeOptions: {
+            hidden: boolean
+        },
         footer: {
             hidden: boolean,
             position: 'above' | 'above-static' | 'above-fixed' | 'below' | 'below-static' | 'below-fixed',

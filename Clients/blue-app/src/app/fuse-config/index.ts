@@ -18,6 +18,9 @@ export const fuseConfig: FuseConfig = {
             folded    : false,
             background: 'mat-fuse-dark-700-bg'
         },
+        themeOptions  : {
+            hidden    : false
+        },
         toolbar       : {
             hidden    : false,
             position  : 'below-static',

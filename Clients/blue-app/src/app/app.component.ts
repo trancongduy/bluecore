@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -15,7 +16,6 @@ import { locale as navigationVietnamese } from 'app/navigation/i18n/vi';
 
 import { SecurityService } from 'app/shared/services/security.service';
 import { ConfigurationService } from 'app/shared/services/configuration.service';
-import { Configuration } from './app.constants';
 
 @Component({
     selector   : 'app',
@@ -43,14 +43,14 @@ export class AppComponent implements OnInit, OnDestroy
      * @param {TranslateService} _translateService
      */
     constructor(
+        private _location: Location,
         private _fuseConfigService: FuseConfigService,
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private _securityService: SecurityService,
-        private _configurationService: ConfigurationService
+        private _securityService: SecurityService
     )
     {
         this.Authenticated = this._securityService.IsAuthorized;
@@ -110,7 +110,7 @@ export class AppComponent implements OnInit, OnDestroy
         }
 
         if (this.Authenticated !== true) {
-            this.login();
+            this._location.go('auth/login');
         }
     }
 

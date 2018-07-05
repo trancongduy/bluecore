@@ -37,6 +37,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy
                 navbar : {
                     hidden: true
                 },
+                themeOptions: {
+                    hidden: true
+                },
                 toolbar: {
                     hidden: true
                 },

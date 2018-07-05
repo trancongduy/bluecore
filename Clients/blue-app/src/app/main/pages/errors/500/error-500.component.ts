@@ -24,6 +24,9 @@ export class Error500Component
                 navbar : {
                     hidden: true
                 },
+                themeOptions: {
+                    hidden: true
+                },
                 toolbar: {
                     hidden: true
                 },

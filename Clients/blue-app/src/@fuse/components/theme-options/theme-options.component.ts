@@ -70,6 +70,9 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                     folded    : new FormControl(),
                     background: new FormControl()
                 }),
+                themeOptions: this._formBuilder.group({
+                    hidden    : new FormControl()
+                }),
                 toolbar: this._formBuilder.group({
                     hidden    : new FormControl(),
                     position  : new FormControl(),
