@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
 using IdentityServer4;
 using IdentityServer4.Models;
 
@@ -21,34 +22,28 @@ namespace Blue.Api
         {
             return new List<ApiResource>
             {
-                new ApiResource("blue_api", "The Blue API scope")
+                new ApiResource("blue_api", "The Blue API scope"),
+                new ApiResource
+                {
+                    Name = "api1",
+                    DisplayName = "API 1",
+                    ApiSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    Scopes =
+                    {
+                        new Scope("roles", new List<string> {"admin"}),
+                        new Scope("api1"),
+                        //new Scope
+                        //{
+                        //    Name = "merchant_api_keys",
+                        //    DisplayName = "Merchant API Keys",
+                        //    Description = "Access to the Merchant ID, Publishable Key"
+                        //}
+                    }
+                }
             };
-
-            //return new[]
-            //{
-            //    new ApiResource
-            //    {
-            //        Name = "blue_api_resource",
-            //        DisplayName = "Blue Core API",
-            //        ApiSecrets =
-            //        {
-            //            new Secret("secret".Sha256())
-            //        },
-            //        Scopes =
-            //        {
-            //            new Scope
-            //            {
-            //                Name = "blue_api.full_access",
-            //                DisplayName = "Full access to Blue API"
-            //            },
-            //            new Scope
-            //            {
-            //                Name = "blue_api.read_only",
-            //                DisplayName = "Read only access to Blue API"
-            //            }
-            //        }
-            //    }
-            //};
         }
 
         // clients want to access resources (aka scopes)
@@ -99,14 +94,28 @@ namespace Blue.Api
                     ClientId = "ro.client",
                     ClientName = "Blue Core App",
                     AccessTokenType = AccessTokenType.Jwt,
-                    AccessTokenLifetime = 300,
+                    AccessTokenLifetime = 3600,
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = {"openid", "profile", "email", "blue_api" },
+                    AllowedScopes = new List<string>
+                    {
+                        "openid",
+                        "profile",
+                        "email",
+                        "roles",
+                        "blue_api",
+                        "api1",
+                        "merchant",
+                        "merchant_api_keys"
+                    },
+                    Claims = new List<Claim>
+                    {
+                        new Claim("role", "admin")
+                    },
                     AllowOfflineAccess = true
                 },
 

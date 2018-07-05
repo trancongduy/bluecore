@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Blue.Constract.Dtos;
 using Blue.Data.IdentityService;
 using Framework.Constract.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ namespace Blue.Api.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RolesController : ControllerBase
     {
         private readonly ApplicationRoleManager _roleManager;

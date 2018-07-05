@@ -1,10 +1,12 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using AutoMapper;
 using Blue.Api.Extensions;
 using Blue.Data.IdentityService;
 using Blue.DomainService;
 using Framework.Common.Middlewares;
+using Framework.Constract.Constant;
 using Framework.Data.Models;
 using Framework.Data.SeedWork;
 using IdentityServer4.Services;
@@ -89,8 +91,15 @@ namespace Blue.Api
             // Enable the use of an [Authorize("Bearer")] attribute on methods and classes to protect.
             services.AddAuthorization(options =>
             {
-                //options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
-                options.AddPolicy("Bearer", policy => policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build());
+                //options.AddPolicy("Bearer",
+                //    policy => policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                //        .RequireAuthenticatedUser()
+                //        .Build());
+
+                options.AddPolicy(Policies.Admin, policy =>
+                {
+                    policy.RequireRole(Roles.SystemAdmin);
+                });
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
