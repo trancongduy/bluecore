@@ -7,6 +7,8 @@ using Blue.DomainService;
 using Framework.Common.Middlewares;
 using Framework.Constract.Constant;
 using Framework.Data.SeedWork;
+using IdentityModel;
+using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +16,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NJsonSchema;
@@ -78,29 +81,16 @@ namespace Blue.Api
                 //options.TokenValidationParameters = tokenValidationParameters;
             });
 
-            //services.AddAuthentication()
-            //    .AddOpenIdConnect(options =>
-            //    {
-            //        options.Authority = "http://localhost:5000";
-            //        options.ClientId = "mvc";
-            //        options.RequireHttpsMetadata = false;
-            //    });
-
-            // Enable the use of an [Authorize("Bearer")] attribute on methods and classes to protect.
             services.AddAuthorization(options =>
             {
-                //options.AddPolicy("Bearer",
-                //    policy => policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                //        .RequireAuthenticatedUser()
-                //        .Build());
-
                 options.AddPolicy(Policies.Admin, policy =>
                 {
                     policy.RequireRole(Roles.SystemAdmin);
                 });
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -176,6 +166,7 @@ namespace Blue.Api
                 .AllowAnyMethod()
                 .AllowCredentials());
 
+            // This use for Identity Server (Authentication Website)
             app.UseIdentityServer();
 
             app.UseHttpsRedirection();

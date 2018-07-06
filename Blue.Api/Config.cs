@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 
@@ -22,19 +23,20 @@ namespace Blue.Api
         {
             return new List<ApiResource>
             {
-                new ApiResource("blue_api", "The Blue API scope"),
+                //new ApiResource("blue_api", "The Blue API scope", new [] {JwtClaimTypes.Role}),
                 new ApiResource
                 {
-                    Name = "api1",
+                    Name = "blue_api",
                     DisplayName = "API 1",
                     ApiSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
+                    //UserClaims = new List<string>{JwtClaimTypes.Role},
                     Scopes =
                     {
-                        new Scope("roles", new List<string> {"admin"}),
-                        new Scope("api1"),
+                        new Scope("roles", new List<string> {"role"}),
+                        new Scope("api1")
                         //new Scope
                         //{
                         //    Name = "merchant_api_keys",
@@ -104,19 +106,19 @@ namespace Blue.Api
                     },
                     AllowedScopes = new List<string>
                     {
-                        "openid",
-                        "profile",
-                        "email",
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
                         "roles",
                         "blue_api",
-                        "api1",
-                        "merchant",
-                        "merchant_api_keys"
+                        "custom_api",
+                        "test_api",
+                        "api1"
                     },
-                    Claims = new List<Claim>
-                    {
-                        new Claim("role", "admin")
-                    },
+                    //Claims = new List<Claim>
+                    //{
+                    //    new Claim("role", "admin")
+                    //},
                     AllowOfflineAccess = true
                 },
 

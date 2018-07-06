@@ -34,12 +34,12 @@ namespace Blue.Data.IdentityService
 
             var claims = principal.Claims.ToList();
             claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
-            claims.Add(new Claim(ClaimTypes.Name, user.UserName ?? string.Empty));
+            //claims.Add(new Claim(ClaimTypes.Name, user.UserName ?? string.Empty));
 
             claims.Add(new Claim(JwtClaimTypes.GivenName, user.FirstName ?? string.Empty));
             claims.Add(new Claim(JwtClaimTypes.FamilyName, user.LastName ?? string.Empty));
-            claims.Add(new Claim(JwtClaimTypes.Role,
-                user.Roles.Any() ? string.Join(',', user.Roles.Select(x => x.Role.Name)) : string.Empty));
+            //claims.Add(new Claim(JwtClaimTypes.Role,
+            //    user.Roles.Any() ? string.Join(',', user.Roles.Select(x => x.Role.Name)) : string.Empty));
             claims.Add(new Claim(JwtClaimTypes.UpdatedAt,
                 user.UpdatedDate.ToUnixTimeSeconds().ToString()));
             claims.Add(new Claim(IdentityServerConstants.StandardScopes.Email, user.Email ?? string.Empty));
