@@ -7,7 +7,7 @@ import { Router }                       from '@angular/router';
 import { ActivatedRoute }               from '@angular/router';
 import { ConfigurationService }         from './configuration.service';
 import { StorageService }               from './storage.service';
-import { Configuration }                from 'app/app.constants';
+import { AppConstant }                  from 'app/app.constants';
 
 @Injectable()
 export class SecurityService {
@@ -19,22 +19,22 @@ export class SecurityService {
     authenticationChallenge$ = this.authenticationSource.asObservable();
     private authorityUrl = '';
 
-    constructor(private _http: Http, 
-                private _router: Router, 
+    constructor(private http: Http, 
+                private router: Router, 
                 private route: ActivatedRoute, 
-                private _storageService: StorageService,
-                private _configuration: Configuration) {
+                private storageService: StorageService,
+                private appConstant: AppConstant) {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
-        this.storage = _storageService;
+        this.storage = storageService;
 
         // this._configurationService.settingsLoaded$.subscribe(x => {
         //     this.authorityUrl = this._configurationService.serverSettings.identityUrl
         //     this.storage.store('IdentityUrl', this.authorityUrl);
         // });
 
-        this.authorityUrl = _configuration.IdentityServer;
+        this.authorityUrl = appConstant.IdentityServer;
         this.storage.store('IdentityUrl', this.authorityUrl);
 
         if (this.storage.retrieve('IsAuthorized') !== '') {
@@ -177,11 +177,11 @@ export class SecurityService {
     public HandleError(error: any) {
         console.log(error);
         if (error.status == 403) {
-            this._router.navigate(['/Forbidden']);
+            this.router.navigate(['/Forbidden']);
         }
         else if (error.status == 401) {
             // this.ResetAuthorizationData();
-            this._router.navigate(['/Unauthorized']);
+            this.router.navigate(['/Unauthorized']);
         }
     }
 
@@ -232,7 +232,7 @@ export class SecurityService {
         if (this.authorityUrl === '')
             this.authorityUrl = this.storage.retrieve('IdentityUrl');
 
-        return this._http.get(this.authorityUrl + '/connect/userinfo', {
+        return this.http.get(this.authorityUrl + '/connect/userinfo', {
             headers: this.headers,
             body: ''
         }).map(res => res.json());

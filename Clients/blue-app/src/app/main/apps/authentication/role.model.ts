@@ -16,7 +16,7 @@ export class Role
     constructor(role?)
     {
         role = role || {};
-        this.id = role.id || FuseUtils.generateGUID();
+        this.id = role.id || '';
         this.code = role.code || '';
         this.name = role.name || '';
         this.description = role.description || '';

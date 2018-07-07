@@ -13,19 +13,19 @@
         <form [formGroup]="roleForm">
             <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field fxFlex>
-                    <input name="code" formControlName="code" placeholder="{{'ROLE.CODE' | translate}}" matInput required>
+                    <input matInput name="code" formControlName="code" placeholder="{{'ROLE.CODE' | translate}}" required>
                 </mat-form-field>
             </div>
 
             <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
                 <mat-form-field fxFlex>
-                    <input name="name" formControlName="name" placeholder="{{'ROLE.NAME' | translate}}" matInput required>
+                    <input matInput name="name" formControlName="name" placeholder="{{'ROLE.NAME' | translate}}" required>
                 </mat-form-field>
             </div>
 
             <div fxLayout="row" class="textarea-wrapper" fxLayoutAlign="start start">
                 <mat-form-field fxFlex>
-                    <textarea name="description" formControlName="description" placeholder="{{'ROLE.DESCRIPTION' | translate}}" matInput type="text"
+                    <textarea matInput name="description" formControlName="description" placeholder="{{'ROLE.DESCRIPTION' | translate}}" type="text"
                               max-rows="4"></textarea>
                 </mat-form-field>
             </div>

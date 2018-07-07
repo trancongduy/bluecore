@@ -1,5 +1,5 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
@@ -59,9 +59,9 @@ export class RoleCreateFormDialogComponent
     createRoleForm(): FormGroup
     {
         return this._formBuilder.group({
-            id          : [this.role.id],
-            name        : [this.role.name],
-            description : [this.role.description]
+            code        : [this.role.code, Validators.required],
+            name        : [this.role.name, Validators.required],
+            description : [this.role.description, Validators.required]
         });
     }
 

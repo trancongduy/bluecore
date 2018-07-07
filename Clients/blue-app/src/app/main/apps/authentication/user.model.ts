@@ -15,7 +15,7 @@ export class User
     constructor(user?)
     {
         user = user || {};
-        this.id = user.id || FuseUtils.generateGUID();
+        this.id = user.id || '';
         this.name = user.name || '';
         this.description = user.description || '';
         this.active = user.active || true;

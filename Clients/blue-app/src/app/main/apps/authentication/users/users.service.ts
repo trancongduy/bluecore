@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AppConstant } from '../../../../app.constants';
 
 @Injectable()
 export class UsersService implements Resolve<any>
@@ -12,10 +13,11 @@ export class UsersService implements Resolve<any>
     /**
      * Constructor
      *
-     * @param {HttpClient} _httpClient
+     * @param {HttpClient} httpClient
      */
     constructor(
-        private _httpClient: HttpClient
+        private httpClient: HttpClient,
+        private appConstant: AppConstant
     )
     {
         // Set the defaults
@@ -52,7 +54,7 @@ export class UsersService implements Resolve<any>
     getUsers(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/users')
+            this.httpClient.get(`${this.appConstant.Server}api/users`)
                 .subscribe((response: any) => {
                     this.users = response;
                     this.onUsersChanged.next(this.users);
@@ -70,7 +72,7 @@ export class UsersService implements Resolve<any>
     UpdateUsers(users): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.post('api/users', [...users])
+            this.httpClient.post(`${this.appConstant.Server}api/users`, [...users])
             .subscribe((response: any) => {
                 this.getUsers();
             }, reject);

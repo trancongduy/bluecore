@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatDialog, MatDialogRef } from '@angular/material';
 import { Subject } from 'rxjs';
@@ -31,34 +31,34 @@ export class RoleComponent implements OnInit, OnDestroy
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
     // Private
-    private _unsubscribeAll: Subject<any>;
+    private unsubscribeAll: Subject<any>;
 
     /**
      * Constructor
      *
-     * @param {RoleService} _roleService
-     * @param {FormBuilder} _formBuilder
-     * @param {MatSnackBar} _matSnackBar
-     * @param {MatDialog} _matDialog
-     * @param {Router} _router
-     * @param {FuseTranslationLoaderService} _fuseTranslationLoaderService
+     * @param {RoleService} roleService
+     * @param {FormBuilder} formBuilder
+     * @param {MatSnackBar} matSnackBar
+     * @param {MatDialog} matDialog
+     * @param {Router} router
+     * @param {FuseTranslationLoaderService} fuseTranslationLoaderService
      * 
      */
     constructor(
-        private _roleService: RoleService,
-        private _formBuilder: FormBuilder,
-        private _matSnackBar: MatSnackBar,
-        private _matDialog: MatDialog,
-        private _router: Router,
-        private _fuseTranslationLoaderService : FuseTranslationLoaderService
+        private roleService: RoleService,
+        private formBuilder: FormBuilder,
+        private matSnackBar: MatSnackBar,
+        private matDialog: MatDialog,
+        private router: Router,
+        private fuseTranslationLoaderService : FuseTranslationLoaderService
     )
     {
         // Set the default
         this.role = new Role();
 
         // Set the private defaults
-        this._unsubscribeAll = new Subject();
-        this._fuseTranslationLoaderService.loadTranslations(english, vietnamese);
+        this.unsubscribeAll = new Subject();
+        this.fuseTranslationLoaderService.loadTranslations(english, vietnamese);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -71,8 +71,8 @@ export class RoleComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to update role on changes
-        this._roleService.onRoleChanged
-            .pipe(takeUntil(this._unsubscribeAll))
+        this.roleService.onRoleChanged
+            .pipe(takeUntil(this.unsubscribeAll))
             .subscribe(role => {
 
                 if ( role )
@@ -91,8 +91,8 @@ export class RoleComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
+        this.unsubscribeAll.next();
+        this.unsubscribeAll.complete();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -106,10 +106,10 @@ export class RoleComponent implements OnInit, OnDestroy
      */
     createRoleForm(): FormGroup
     {
-        return this._formBuilder.group({
+        return this.formBuilder.group({
             id              : [this.role.id],
-            code            : [this.role.code],
-            name            : [this.role.name],
+            code            : [{value: this.role.code, disabled: true}, Validators.required],
+            name            : [this.role.name, Validators.required],
             description     : [this.role.description],
             active          : [this.role.active]
         });
@@ -123,14 +123,14 @@ export class RoleComponent implements OnInit, OnDestroy
         const data = this.roleForm.getRawValue();
         data.handle = FuseUtils.handleize(data.name);
 
-        this._roleService.saveRole(data)
+        this.roleService.updateRole(data)
             .then(() => {
 
                 // Trigger the subscription with new data
-                this._roleService.onRoleChanged.next(data);
+                this.roleService.onRoleChanged.next(data);
 
                 // Show the success message
-                this._matSnackBar.open('Your changed have been saved', 'OK', {
+                this.matSnackBar.open('Your changed have been saved', 'OK', {
                     verticalPosition: 'top',
                     duration        : 2000
                 });
@@ -142,7 +142,7 @@ export class RoleComponent implements OnInit, OnDestroy
      */
     deleteRole(event): void
     {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+        this.confirmDialogRef = this.matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
 
@@ -151,8 +151,8 @@ export class RoleComponent implements OnInit, OnDestroy
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if ( result )
             {
-                this._roleService.deleteRole(this.role);
-                this._router.navigate(['/apps/authentication/roles']);
+                this.roleService.deleteRole(this.role);
+                this.router.navigate(['/apps/authentication/roles']);
             }
             this.confirmDialogRef = null;
         });

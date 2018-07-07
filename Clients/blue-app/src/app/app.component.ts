@@ -109,9 +109,9 @@ export class AppComponent implements OnInit, OnDestroy
             this._securityService.AuthorizedCallback();
         }
 
-        if (this.Authenticated !== true) {
-            this._location.go('auth/login');
-        }
+        // if (this.Authenticated !== true) {
+        //     this._location.go('auth/login');
+        // }
     }
 
     /**
