@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Blue.Constract.Dtos;
 using Blue.Data.Models;
-using Blue.Data.Models.IdentityModel;
 
 namespace Blue.Converter
 {
@@ -9,8 +8,8 @@ namespace Blue.Converter
     {
         public MapBothProfile()
         {
+            CreateMap<AuditTrail, AuditDto>().ReverseMap();
             CreateMap<Contact, ContactDto>().ReverseMap();
-            CreateMap<Role, RoleDto>().ReverseMap();
         }
     }
 }

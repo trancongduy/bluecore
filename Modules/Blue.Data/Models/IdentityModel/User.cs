@@ -19,6 +19,8 @@ namespace Blue.Data.Models.IdentityModel
 
         public bool IsDeleted { get; set; }
 
+        public bool Active { get; set; }
+
         public bool IsLocked { get; set; }
 
         public DateTimeOffset LockedDate { get; set; }

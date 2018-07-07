@@ -4,14 +4,16 @@ using Blue.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Blue.Api.Migrations
 {
     [DbContext(typeof(BlueDbContext))]
-    partial class BlueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180707220713_UpdateRoleTableAndSeedData")]
+    partial class UpdateRoleTableAndSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

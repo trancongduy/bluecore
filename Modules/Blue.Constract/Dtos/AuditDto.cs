@@ -1,10 +1,11 @@
 ﻿using System;
 using Framework.Constract.Constant;
+using Framework.Constract.Interfaces;
 using Framework.Constract.SeedWork;
 
 namespace Blue.Constract.Dtos
 {
-    public class AuditDto : BaseDto
+    public class AuditDto : BaseDto, IAuditableDto
     {
         public string SessionId { get; set; }
 
@@ -23,5 +24,10 @@ namespace Blue.Constract.Dtos
         public string Data { get; set; }
 
         public UserAction UserAction { get; set; }
+
+        public DateTimeOffset CreatedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTimeOffset UpdatedDate { get; set; }
+        public string UpdatedBy { get; set; }
     }
 }

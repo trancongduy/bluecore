@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Blue.Constract.Dtos.Role;
+using Blue.Data.Models.IdentityModel;
 
 namespace Blue.Converter
 {
@@ -6,6 +8,7 @@ namespace Blue.Converter
     {
         public EntityToDtoProfile()
         {
+            CreateMap<Role, RoleDto>();
         }
     }
 }

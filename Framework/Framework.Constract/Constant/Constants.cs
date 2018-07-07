@@ -13,12 +13,12 @@
 
     public static class Policies
     {
-        public const string Admin = "Admin";
+        public const string SuperAdmin = "SuperAdmin";
     }
 
     public static class Roles
     {
-        public const string SystemAdmin = "systemadmin";
-        public const string Admin = "admin";
+        public const string SuperAdmin = "SUPERADMIN";
+        public const string Admin = "ADMIN";
     }
 }

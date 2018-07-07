@@ -15,9 +15,13 @@ namespace Blue.Data.Models.IdentityModel
         {
         }
 
+        public string Code { get; set; }
+
         public string Description { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public bool Active { get; set; }
 
         public DateTimeOffset CreatedDate { get; set; }
 

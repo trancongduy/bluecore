@@ -82,8 +82,6 @@ namespace Framework.Data.SeedWork
         public void Update(TDto dto)
         {
             var entity = _repository.GetSingle(dto.Id);
-            dto.CreatedDate = entity.CreatedDate;
-            dto.CreatedBy = entity.CreatedBy;
             entity = _mapper.MapToInstance(dto, entity);
             _repository.Update(_mapper.MapToInstance(dto, entity));
             UnitOfWork.SaveChanges();
@@ -142,8 +140,6 @@ namespace Framework.Data.SeedWork
         public Task<int> UpdateAsync(TDto dto)
         {
             var entity = _repository.GetSingle(dto.Id);
-            dto.CreatedBy = entity.CreatedBy;
-            dto.CreatedDate = entity.CreatedDate;
             entity = _mapper.MapToInstance(dto, entity);
             _repository.Update(entity);
             return UnitOfWork.SaveChangesAsync();

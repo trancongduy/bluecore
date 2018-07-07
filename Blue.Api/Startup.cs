@@ -83,9 +83,9 @@ namespace Blue.Api
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(Policies.Admin, policy =>
+                options.AddPolicy(Policies.SuperAdmin, policy =>
                 {
-                    policy.RequireRole(Roles.SystemAdmin);
+                    policy.RequireRole(Roles.SuperAdmin);
                 });
             });
 

@@ -10,7 +10,7 @@ namespace Blue.Api.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = Policies.Admin)]
+    [Authorize(Policy = Policies.SuperAdmin)]
     public class IdentityController : ControllerBase
     {
         [HttpGet]
