@@ -113,12 +113,12 @@ namespace Blue.Api.ApiControllers
 
             var result = await _roleManager.DeleteAsync(role);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return NoContent();
+                throw new Exception($"Deleting role {id} failed on save.");
             }
 
-            return BadRequest();
+            return NoContent();
         }
     }
 }

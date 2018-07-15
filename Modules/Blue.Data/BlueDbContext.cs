@@ -293,7 +293,10 @@ namespace Blue.Data
                 {
                     case EntityState.Added:
                         ((IAuditableEntity) entity.Entity).CreatedDate = DateTimeOffset.Now;
-                        ((IAuditableEntity) entity.Entity).CreatedBy = ((IAuditableEntity)entity.Entity).CreatedBy.Equals(UserType.SystemGenerated) ? UserType.SystemGenerated : currentUser;
+                        ((IAuditableEntity) entity.Entity).CreatedBy =
+                            !string.IsNullOrEmpty(((IAuditableEntity) entity.Entity).CreatedBy)
+                                ? currentUser
+                                : UserType.SystemGenerated;
                         ((IAuditableEntity) entity.Entity).IsDeleted = false;
                         break;
                     case EntityState.Modified:
