@@ -3,16 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RuntimeFrameworkVersion>2.1.1</RuntimeFrameworkVersion>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="2.2.0" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.6.0" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.1.0" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1" />
   </ItemGroup>
 
@@ -21,6 +20,7 @@
     <ProjectReference Include="..\Modules\Blue.Constract\Blue.Constract.csproj" />
     <ProjectReference Include="..\Modules\Blue.Data\Blue.Data.csproj" />
     <ProjectReference Include="..\Modules\Blue.DomainService\Blue.DomainService.csproj" />
+    <ProjectReference Include="..\WebHost.Customization\WebHost.Customization.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,5 +30,178 @@
   <ItemGroup>
     <Content Remove="Views\Consent\_ScopeListItem.cshtml" />
     <Content Remove="Views\Consent\Index.cshtml" />
+    <Content Remove="wwwroot\assets\images\avatars\1.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\2.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\3.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\4.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\5.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Abbott.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\alice.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\andrew.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Arnold.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Barrera.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Blair.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Boyle.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\carl.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Christy.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Copeland.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\danielle.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Estes.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\garry.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Harper.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Helen.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Henderson.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\james.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\jane.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Josefina.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\joyce.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\katherine.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Katina.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Lily.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Mai.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Nancy.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Nora.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Odessa.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\profile.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Reyna.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Shauna.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Shepard.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Tillman.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Trevino.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Tyson.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\Velazquez.jpg" />
+    <Content Remove="wwwroot\assets\images\avatars\vincent.jpg" />
+    <Content Remove="wwwroot\assets\images\backgrounds\autumn.jpg" />
+    <Content Remove="wwwroot\assets\images\backgrounds\dark-material-bg.jpg" />
+    <Content Remove="wwwroot\assets\images\backgrounds\header-bg.png" />
+    <Content Remove="wwwroot\assets\images\backgrounds\spring.jpg" />
+    <Content Remove="wwwroot\assets\images\backgrounds\summer.jpg" />
+    <Content Remove="wwwroot\assets\images\backgrounds\winter.jpg" />
+    <Content Remove="wwwroot\assets\images\bootstrap-mini-logo.png" />
+    <Content Remove="wwwroot\assets\images\ecommerce\product-image-placeholder.png" />
+    <Content Remove="wwwroot\assets\images\etc\air-balloons.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\alice-cooper-poison.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\avenue.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\cactus.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\early-sunrise.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\fallout.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\flowers-thumb.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\mountain-lake.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\mountain-sunset.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\road-trip.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\sample-file-preview.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\snow-thumb.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\snow.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\sunrise-thumb.jpg" />
+    <Content Remove="wwwroot\assets\images\etc\tropical-beach.jpg" />
+    <Content Remove="wwwroot\assets\images\flags\es.png" />
+    <Content Remove="wwwroot\assets\images\flags\tr.png" />
+    <Content Remove="wwwroot\assets\images\flags\us.png" />
+    <Content Remove="wwwroot\assets\images\fuse-mini-logo.png" />
+    <Content Remove="wwwroot\assets\images\logos\android.png" />
+    <Content Remove="wwwroot\assets\images\logos\angular-material.png" />
+    <Content Remove="wwwroot\assets\images\logos\angular.png" />
+    <Content Remove="wwwroot\assets\images\logos\browsersync.png" />
+    <Content Remove="wwwroot\assets\images\logos\fallout.png" />
+    <Content Remove="wwwroot\assets\images\logos\google.png" />
+    <Content Remove="wwwroot\assets\images\logos\gulp.png" />
+    <Content Remove="wwwroot\assets\images\logos\jasmine.png" />
+    <Content Remove="wwwroot\assets\images\logos\karma.png" />
+    <Content Remove="wwwroot\assets\images\logos\node-sass.png" />
+    <Content Remove="wwwroot\assets\images\logos\protractor.png" />
+    <Content Remove="wwwroot\assets\images\logos\yeoman.png" />
+    <Content Remove="wwwroot\assets\images\patterns\drop-grey.png" />
+    <Content Remove="wwwroot\assets\images\patterns\drop.png" />
+    <Content Remove="wwwroot\assets\images\patterns\rain-grey.png" />
+    <Content Remove="wwwroot\assets\images\patterns\rain.png" />
+    <Content Remove="wwwroot\assets\images\placeholder.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\images\avatars\1.jpg" />
+    <None Include="wwwroot\assets\images\avatars\2.jpg" />
+    <None Include="wwwroot\assets\images\avatars\3.jpg" />
+    <None Include="wwwroot\assets\images\avatars\4.jpg" />
+    <None Include="wwwroot\assets\images\avatars\5.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Abbott.jpg" />
+    <None Include="wwwroot\assets\images\avatars\alice.jpg" />
+    <None Include="wwwroot\assets\images\avatars\andrew.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Arnold.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Barrera.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Blair.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Boyle.jpg" />
+    <None Include="wwwroot\assets\images\avatars\carl.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Christy.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Copeland.jpg" />
+    <None Include="wwwroot\assets\images\avatars\danielle.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Estes.jpg" />
+    <None Include="wwwroot\assets\images\avatars\garry.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Harper.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Helen.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Henderson.jpg" />
+    <None Include="wwwroot\assets\images\avatars\james.jpg" />
+    <None Include="wwwroot\assets\images\avatars\jane.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Josefina.jpg" />
+    <None Include="wwwroot\assets\images\avatars\joyce.jpg" />
+    <None Include="wwwroot\assets\images\avatars\katherine.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Katina.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Lily.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Mai.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Nancy.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Nora.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Odessa.jpg" />
+    <None Include="wwwroot\assets\images\avatars\profile.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Reyna.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Shauna.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Shepard.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Tillman.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Trevino.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Tyson.jpg" />
+    <None Include="wwwroot\assets\images\avatars\Velazquez.jpg" />
+    <None Include="wwwroot\assets\images\avatars\vincent.jpg" />
+    <None Include="wwwroot\assets\images\backgrounds\autumn.jpg" />
+    <None Include="wwwroot\assets\images\backgrounds\dark-material-bg.jpg" />
+    <None Include="wwwroot\assets\images\backgrounds\header-bg.png" />
+    <None Include="wwwroot\assets\images\backgrounds\spring.jpg" />
+    <None Include="wwwroot\assets\images\backgrounds\summer.jpg" />
+    <None Include="wwwroot\assets\images\backgrounds\winter.jpg" />
+    <None Include="wwwroot\assets\images\bootstrap-mini-logo.png" />
+    <None Include="wwwroot\assets\images\ecommerce\product-image-placeholder.png" />
+    <None Include="wwwroot\assets\images\etc\air-balloons.jpg" />
+    <None Include="wwwroot\assets\images\etc\alice-cooper-poison.jpg" />
+    <None Include="wwwroot\assets\images\etc\avenue.jpg" />
+    <None Include="wwwroot\assets\images\etc\cactus.jpg" />
+    <None Include="wwwroot\assets\images\etc\early-sunrise.jpg" />
+    <None Include="wwwroot\assets\images\etc\fallout.jpg" />
+    <None Include="wwwroot\assets\images\etc\flowers-thumb.jpg" />
+    <None Include="wwwroot\assets\images\etc\mountain-lake.jpg" />
+    <None Include="wwwroot\assets\images\etc\mountain-sunset.jpg" />
+    <None Include="wwwroot\assets\images\etc\road-trip.jpg" />
+    <None Include="wwwroot\assets\images\etc\sample-file-preview.jpg" />
+    <None Include="wwwroot\assets\images\etc\snow-thumb.jpg" />
+    <None Include="wwwroot\assets\images\etc\snow.jpg" />
+    <None Include="wwwroot\assets\images\etc\sunrise-thumb.jpg" />
+    <None Include="wwwroot\assets\images\etc\tropical-beach.jpg" />
+    <None Include="wwwroot\assets\images\flags\es.png" />
+    <None Include="wwwroot\assets\images\flags\tr.png" />
+    <None Include="wwwroot\assets\images\flags\us.png" />
+    <None Include="wwwroot\assets\images\fuse-mini-logo.png" />
+    <None Include="wwwroot\assets\images\logos\android.png" />
+    <None Include="wwwroot\assets\images\logos\angular-material.png" />
+    <None Include="wwwroot\assets\images\logos\angular.png" />
+    <None Include="wwwroot\assets\images\logos\browsersync.png" />
+    <None Include="wwwroot\assets\images\logos\fallout.png" />
+    <None Include="wwwroot\assets\images\logos\google.png" />
+    <None Include="wwwroot\assets\images\logos\gulp.png" />
+    <None Include="wwwroot\assets\images\logos\jasmine.png" />
+    <None Include="wwwroot\assets\images\logos\karma.png" />
+    <None Include="wwwroot\assets\images\logos\node-sass.png" />
+    <None Include="wwwroot\assets\images\logos\protractor.png" />
+    <None Include="wwwroot\assets\images\logos\yeoman.png" />
+    <None Include="wwwroot\assets\images\patterns\drop-grey.png" />
+    <None Include="wwwroot\assets\images\patterns\drop.png" />
+    <None Include="wwwroot\assets\images\patterns\rain-grey.png" />
+    <None Include="wwwroot\assets\images\patterns\rain.png" />
+    <None Include="wwwroot\assets\images\placeholder.png" />
   </ItemGroup>
 </Project>

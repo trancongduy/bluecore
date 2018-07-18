@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,8 @@ using Framework.Constract.Constant;
 using Blue.Data;
 using Blue.Data.IdentityService;
 using Blue.Data.Models.IdentityModel;
+using Blue.IdentityServer.Extensions;
+using Blue.IdentityServer.Services;
 
 namespace Blue.IdentityServer
 {
@@ -45,63 +48,24 @@ namespace Blue.IdentityServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             services.AddDbContext<BlueDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly("Blue.Api")));
+                    options.UseSqlServer(connectionString,
+                    b => b.MigrationsAssembly(migrationsAssembly)));
 
             //services.AddDbContext<BlueDbContext>(options =>
-            //        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),
-            //        b => b.MigrationsAssembly("Blue.Api")));
+            //        options.UseNpgsql(connectionString,
+            //        b => b.MigrationsAssembly(migrationsAssembly)));
 
-            //Add Customize Identity
-            services.AddIdentity<User, Role>()
-                .AddRoleStore<RoleStore>()
-                .AddUserStore<UserStore>()
-                .AddRoleManager<ApplicationRoleManager>()
-                .AddUserManager<ApplicationUserManager>()
-                .AddSignInManager<ApplicationSignInManager>()
-                .AddEntityFrameworkStores<BlueDbContext>()
-                .AddDefaultTokenProviders();
-                    //.AddIdentityServer();
+            services.AddTransient<ILoginService<User>, EfLoginService>();
+            services.AddTransient<IUserResolverService, UserResolverService>();
 
-
-            // Add Identity Server
-            // configure identity server with in-memory stores, keys, clients and scopes
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential(filename: "tempkey.rsa")
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryClients(Config.GetClients())
-                .AddAspNetIdentity<User>();
+            services.AddCustomizedIdentity(Configuration);
 
             // Still working fine with IdentityServer4
-            services.AddMvc();
-
-            //services.AddMvcCore()
-            //        .AddAuthorization()
-            //        .AddJsonFormatters(j =>
-            //        {
-            //            j.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            //            j.Formatting = Formatting.Indented;
-            //        });
-
-            // Enable Cors
-            // this defines a CORS policy called "AllowAll"
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll", policy =>
-                {
-                    policy.AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowAnyOrigin()
-                            .AllowCredentials();
-                });
-            });
-
-            services.Configure<MvcOptions>(options =>
-            {
-                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAll"));
-            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,58 +74,18 @@ namespace Blue.IdentityServer
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+
+            app.UseStaticFiles();
 
             app.UseIdentityServer();
 
-            // Handle Error for API
-            #region Exception Handler
-            //app.UseExceptionHandler(appBuilder =>
-            //{
-            //    appBuilder.Use(async (context, next) =>
-            //    {
-            //        var error = context.Features[typeof(IExceptionHandlerFeature)] as IExceptionHandlerFeature;
-
-            //        //when authorization has failed, should retrun a json message to client
-            //        if (error != null && error.Error is SecurityTokenExpiredException)
-            //        {
-            //            var result = new RequestResult();
-            //            result.State = RequestState.NotAuth;
-            //            result.Messages.Add(new ValidationError
-            //            {
-            //                Error = "Token expired"
-            //            });
-
-            //            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            //            context.Response.ContentType = HttpContentType.ApplicationJson;
-
-            //            await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
-            //        }
-            //        //when orther error, retrun a error message json to client
-            //        else if (error != null && error.Error != null)
-            //        {
-            //            var result = new RequestResult();
-            //            result.State = RequestState.Failed;
-            //            result.Messages.Add(new ValidationError {
-            //                Error = error.Error.Message,
-            //                StackTrace = error.Error.StackTrace
-            //            });
-
-            //            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            //            context.Response.ContentType = HttpContentType.ApplicationJson;
-            //            await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
-            //        }
-            //        //when no error, do next.
-            //        else await next();
-            //    });
-            //});
-
-            //app.UseMiddleware(typeof(ErrorHandlingMiddleware));
-            #endregion
-
-            app.UseCors("AllowAll");
-
-            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

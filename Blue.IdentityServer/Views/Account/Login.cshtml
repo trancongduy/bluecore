@@ -1,86 +1,61 @@
-﻿@model Blue.Constract.ViewModels.Account.LoginViewModel
+﻿@model Blue.IdentityServer.Models.Account.LoginViewModel
+@{
+    ViewData["Title"] = "Log in";
+}
+<div id="wrapper">
+    <div class="content-wrapper">
+        <div class="content custom-scrollbar">
 
-<div class="login-page">
-    <div class="page-header">
-        <h1>Login</h1>
-    </div>
+            <div id="login" class="p-8">
 
-    @Html.PartialAsync("_ValidationSummary")
+                <div class="form-wrapper md-elevation-8 p-8">
 
-    <div class="row">
-
-        @if (Model.EnableLocalLogin)
-        {
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Local Login</h3>
+                    <div class="logo">
+                        <img src="~/assets/images/logos/fuse.svg" alt="Fuse Logo" />
                     </div>
-                    <div class="panel-body">
 
-                        <form asp-route="Login">
-                            <input type="hidden" asp-for="ReturnUrl" />
+                    <div class="title mt-4 mb-8">LOGIN TO YOUR ACCOUNT</div>
 
-                            <fieldset>
-                                <div class="form-group">
-                                    <label asp-for="Username"></label>
-                                    <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Password"></label>
-                                    <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
-                                </div>
-                                @if (Model.AllowRememberLogin)
-                                {
-                                    <div class="form-group login-remember">
-                                        <label asp-for="RememberLogin">
-                                            <input asp-for="RememberLogin">
-                                            <strong>Remember My Login</strong>
-                                        </label>
-                                    </div>
-                                }
-                                <div class="form-group">
-                                    <button class="btn btn-primary">Login</button>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
+                    <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" name="loginForm" novalidate>
+                        <input type="hidden" asp-for="ReturnUrl" />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group mb-4">
+                            <input asp-for="UserName" type="text" class="form-control" id="loginFormInputUserName" aria-describedby="usernameHelp" placeholder=" " />
+                            <label asp-for="UserName" for="loginFormInputUserName">Username</label>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <input asp-for="Password" type="password" class="form-control" id="loginFormInputPassword" placeholder="Password" />
+                            <label asp-for="Password" for="loginFormInputPassword">Password</label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="remember-forgot-password row no-gutters align-items-center justify-content-between pt-4">
+
+                            <div class="form-check remember-me mb-4">
+                                <label asp-for="RememberMe" class="form-check-label">
+                                    <input asp-for="RememberMe" type="checkbox" class="form-check-input" aria-label="Remember Me" />
+                                    <span class="checkbox-icon"></span>
+                                    <span class="form-check-description">Remember Me</span>
+                                </label>
+                            </div>
+
+                            <a href="#" class="forgot-password text-secondary mb-4">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="submit-button btn btn-block btn-secondary my-4 mx-auto" aria-label="LOG IN">&nbsp;LOG IN&nbsp;</button>
+
+                    </form>
+
                 </div>
             </div>
-        }
 
-        @if (Model.VisibleExternalProviders.Any())
-        {
-            <div class="col-md-6 col-sm-6 external-providers">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">External Login</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-inline">
-                            @foreach (var provider in Model.VisibleExternalProviders)
-                            {
-                                <li>
-                                    <a class="btn btn-default"
-                                       asp-action="ExternalLogin"
-                                       asp-route-provider="@provider.AuthenticationScheme"
-                                       asp-route-returnUrl="@Model.ReturnUrl">
-                                        @provider.DisplayName
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        }
-
-        @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
-        {
-            <div class="alert alert-warning">
-                <strong>Invalid login request</strong>
-                There are no login schemes configured for this client.
-            </div>
-        }
+        </div>
     </div>
 </div>
+<nav id="footer" class="bg-dark text-auto row no-gutters align-items-center px-6">
+    <a class="btn btn-secondary text-capitalize" href="http://themeforest.net/item/fuse-angularjs-material-design-admin-template/12931855?ref=srcn" target="_blank">
+        <i class="icon icon-cart mr-2 s-4"></i>Purchase FUSE Bootstrap
+    </a>
+</nav>

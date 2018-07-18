@@ -1,51 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
+using Blue.Data.IdentityService;
+using Blue.Data.Models.IdentityModel;
+using Blue.IdentityServer.Attributes;
+using Blue.IdentityServer.Models.Account;
+using Blue.IdentityServer.Services;
+using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
-using Framework.Common.ActionFilters;
-using Blue.DomainService;
-using Blue.Constract.ViewModels.Account;
-using Blue.Data.IdentityService;
-using IdentityServer4;
-using System;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Principal;
 using Microsoft.AspNetCore.Authentication;
-using Blue.IdentityServer.Attributes;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Microsoft.AspNetCore.Mvc;
 
 namespace Blue.IdentityServer.Controllers
 {
     [SecurityHeaders]
     public class AccountController : Controller
     {
-        private readonly ApplicationUserManager _userManager;
-        private readonly ApplicationSignInManager _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
-        private readonly ILogger _logger;
-        private readonly AccountService _accountService;
+        private readonly ILoginService<User> _loginService;
 
-        public AccountController(
-            ApplicationUserManager userManager,
-            ApplicationSignInManager signInManager,
-            ILoggerFactory loggerFactory,
-            IIdentityServerInteractionService interaction,
-            IHttpContextAccessor httpContext,
-            IClientStore clientStore)
+        public AccountController(IIdentityServerInteractionService interaction, IClientStore clientStore,
+            ApplicationUserManager userManager, ILoginService<User> loginService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = loggerFactory.CreateLogger<AccountController>();
             _interaction = interaction;
             _clientStore = clientStore;
-
-            _accountService = new AccountService(interaction, httpContext, clientStore);
+            _loginService = loginService;
         }
 
         /// <summary>
@@ -54,13 +35,16 @@ namespace Blue.IdentityServer.Controllers
         [HttpGet]
         public async Task<IActionResult> Login(string returnUrl)
         {
-            var vm = await _accountService.BuildLoginViewModelAsync(returnUrl);
-
-            if (vm.IsExternalLoginOnly)
+            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
+            if (context?.IdP != null)
             {
-                // only one option for logging in
-                return await ExternalLogin(vm.ExternalLoginScheme, returnUrl);
+                // if IdP is passed, then bypass showing the login screen
+                return ExternalLogin(context.IdP, returnUrl);
             }
+
+            var vm = await BuildLoginViewModelAsync(returnUrl, context);
+
+            ViewData["ReturnUrl"] = returnUrl;
 
             return View(vm);
         }
@@ -70,28 +54,24 @@ namespace Blue.IdentityServer.Controllers
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginInputModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: false);
-                if (result.Succeeded)
+                var user = await _loginService.FindByUsername(model.UserName);
+                if (await _loginService.ValidateCredentials(user, model.Password))
                 {
                     AuthenticationProperties props = null;
-                    // only set explicit expiration here if persistent. 
-                    // otherwise we reply upon expiration configured in cookie middleware.
-                    if (AccountOptions.AllowRememberLogin && model.RememberLogin)
+                    if (model.RememberMe)
                     {
                         props = new AuthenticationProperties
                         {
                             IsPersistent = true,
-                            ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
+                            ExpiresUtc = DateTimeOffset.UtcNow.AddYears(10)
                         };
                     };
 
-                    // issue authentication cookie with subject ID and username
-                    var user = await _userManager.FindByNameAsync(model.Username);
-                    await HttpContext.SignInAsync(user.Id.ToString(), user.UserName, props);
+                    await _loginService.SignIn(user);
 
                     // make sure the returnUrl is still valid, and if yes - redirect back to authorize endpoint
                     if (_interaction.IsValidReturnUrl(model.ReturnUrl))
@@ -102,136 +82,64 @@ namespace Blue.IdentityServer.Controllers
                     return Redirect("~/");
                 }
 
-                ModelState.AddModelError("", AccountOptions.InvalidCredentialsErrorMessage);
+                ModelState.AddModelError("", "Invalid username or password.");
             }
 
             // something went wrong, show form with error
-            var vm = await _accountService.BuildLoginViewModelAsync(model);
+            var vm = await BuildLoginViewModelAsync(model);
+
+            ViewData["ReturnUrl"] = model.ReturnUrl;
+
             return View(vm);
         }
 
-        //
-        // POST: api/Account/Login
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("Login")]
-        [ValidationFilter]
-        public async Task<IActionResult> ApiLogin(LoginInputModel model)
+        private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl, AuthorizationRequest context)
         {
-            if (!ModelState.IsValid)
+            var allowLocal = true;
+            if (context?.ClientId != null)
             {
-                ModelState.AddModelError(string.Empty, "Username or password is unvalid!");
-                return NotFound("Username or password is unvalid!");
+                var client = await _clientStore.FindEnabledClientByIdAsync(context.ClientId);
+                if (client != null)
+                {
+                    allowLocal = client.EnableLocalLogin;
+                }
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-            var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: false);
-            if (result.Succeeded)
+            return new LoginViewModel
             {
-                _logger.LogInformation(1, "User logged in.");
-                return Ok("LoggedIn");
-            }
-
-            if (result.RequiresTwoFactor)
-            {
-                return RedirectToAction("SendCode", new { ReturnUrl = model.ReturnUrl, RememberMe = model.RememberLogin });
-            }
-
-            if (result.IsLockedOut)
-            {
-                _logger.LogWarning(2, "User account locked out.");
-                return Ok("Lockout");
-            }
-
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            return Unauthorized();
+                ReturnUrl = returnUrl,
+                UserName = context?.LoginHint,
+            };
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("Logout")]
-        public async Task<IActionResult> Logout()
+        async Task<LoginViewModel> BuildLoginViewModelAsync(LoginViewModel model)
         {
-            await HttpContext.SignOutAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme);
-
-            // delete authentication cookie
-            await _signInManager.SignOutAsync();
-
-            return Ok("LoggedOut");
-        }
-
-        //
-        // POST: api/Account/Logout
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("Logout")]
-        public async Task<IActionResult> Logout(LogoutViewModel model)
-        {
-            var vm = await _accountService.BuildLoggedOutViewModelAsync(model.LogoutId);
-            if (vm.TriggerExternalSignout)
-            {
-                string url = Url.Action("Logout", new { logoutId = vm.LogoutId });
-                try
-                {
-                    // hack: try/catch to handle social providers that throw
-                    await HttpContext.SignOutAsync(vm.ExternalAuthenticationScheme,
-                        new AuthenticationProperties { RedirectUri = url });
-                }
-                catch (NotSupportedException) // this is for the external providers that don't have signout
-                {
-                }
-                catch (InvalidOperationException) // this is for Windows/Negotiate
-                {
-                }
-            }
-
-            // delete authentication cookie
-            await _signInManager.SignOutAsync();
-
-            return Ok("LoggedOut");
+            var context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
+            var vm = await BuildLoginViewModelAsync(model.ReturnUrl, context);
+            vm.UserName = model.UserName;
+            vm.RememberMe = model.RememberMe;
+            return vm;
         }
 
         /// <summary>
         /// initiate roundtrip to external authentication provider
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> ExternalLogin(string provider, string returnUrl)
+        public IActionResult ExternalLogin(string provider, string returnUrl)
         {
-            returnUrl = Url.Action("ExternalLoginCallback", new { returnUrl = returnUrl });
-
-            // windows authentication is modeled as external in the asp.net core authentication manager, so we need special handling
-            if (AccountOptions.WindowsAuthenticationSchemes.Contains(provider))
+            if (returnUrl != null)
             {
-                // but they don't support the redirect uri, so this URL is re-triggered when we call challenge
-                if (HttpContext.User is WindowsPrincipal)
-                {
-                    var props = new AuthenticationProperties();
-                    props.Items.Add("scheme", AccountOptions.WindowsAuthenticationProviderName);
-
-                    var id = new ClaimsIdentity(provider);
-                    id.AddClaim(new Claim(ClaimTypes.NameIdentifier, HttpContext.User.Identity.Name));
-                    id.AddClaim(new Claim(ClaimTypes.Name, HttpContext.User.Identity.Name));
-
-                    await HttpContext.SignInAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme, new ClaimsPrincipal(id), props);
-                    return Redirect(returnUrl);
-                }
-                else
-                {
-                    // this triggers all of the windows auth schemes we're supporting so the browser can use what it supports
-                    return new ChallengeResult(AccountOptions.WindowsAuthenticationSchemes);
-                }
+                returnUrl = UrlEncoder.Default.Encode(returnUrl);
             }
-            else
+            returnUrl = "/account/externallogincallback?returnUrl=" + returnUrl;
+
+            // start challenge and roundtrip the return URL
+            var props = new AuthenticationProperties
             {
-                // start challenge and roundtrip the return URL
-                var props = new AuthenticationProperties
-                {
-                    RedirectUri = returnUrl,
-                    Items = { { "scheme", provider } }
-                };
-                return new ChallengeResult(provider, props);
-            }
+                RedirectUri = returnUrl,
+                Items = { { "scheme", provider } }
+            };
+            return new ChallengeResult(provider, props);
         }
     }
 }

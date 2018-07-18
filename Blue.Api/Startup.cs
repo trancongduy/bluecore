@@ -11,6 +11,7 @@ using IdentityModel;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -57,10 +58,6 @@ namespace Blue.Api
 
 			services.LoadInstalledModules(_hostingEnvironment.ContentRootPath);
 
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<IUserResolverService, UserResolverService>();
-            services.AddTransient<IEventService, AuditEventService>();
-
             services.AddHttpContextAccessor();
             services.AddCustomizedDataStore(Configuration);
             services.AddCustomizedIdentity(Configuration);
@@ -88,6 +85,12 @@ namespace Blue.Api
                     policy.RequireRole(Roles.SuperAdmin);
                 });
             });
+
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IUserResolverService, UserResolverService>();
+            //services.AddTransient<IEventService, AuditEventService>();
+            services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
@@ -155,6 +158,7 @@ namespace Blue.Api
                         Email = "thangln1003@gmail.com"
                     };
                 };
+                settings.GeneratorSettings.IsAspNetCore = true;
             });
 
             //TODO: Exeption Handler

@@ -21,6 +21,7 @@ using Blue.Data.IdentityService;
 using Blue.Data.Models.IdentityModel;
 using Framework.Data.Interfaces;
 using IdentityServer4.Services;
+using Microsoft.AspNetCore.Authorization;
 using IMapper = Framework.Constract.Interfaces.IMapper;
 
 namespace Blue.Api.Extensions
@@ -87,7 +88,7 @@ namespace Blue.Api.Extensions
 		            .UseSqlServer(connectionString,
                         sqlServerOptionsAction: sqlOptions =>
                         {
-                            sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                            sqlOptions.MigrationsAssembly(migrationsAssembly);
                             //Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency 
                             sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                         }));
@@ -166,6 +167,9 @@ namespace Blue.Api.Extensions
             //builder.RegisterModule(new IdentityConfigModule());
             //builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
 		    builder.RegisterType<AuditAttribute>().InstancePerRequest();
+		    //// register the scope authorization handler
+		    //builder.RegisterType<AuthorizationPolicyProvider>().As<IAuthorizationPolicyProvider>().SingleInstance();
+		    //builder.RegisterType<HasScopeHandler>().As<IAuthorizationHandler>().SingleInstance();
 
             foreach (var module in GlobalConfiguration.Modules)
 			{

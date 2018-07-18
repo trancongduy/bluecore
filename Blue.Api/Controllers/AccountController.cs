@@ -1,85 +1,96 @@
-﻿using System.Text.Encodings.Web;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Blue.Api.Attributes;
-using Blue.Api.Models.AccountViewModel;
-using IdentityServer4.Models;
-using IdentityServer4.Services;
-using IdentityServer4.Stores;
-using Microsoft.AspNetCore.Authentication;
+using Blue.Constract.ViewModels.Account;
+using Blue.Data.IdentityService;
+using Blue.Data.Models.IdentityModel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Blue.Api.Controllers
 {
-    //[SecurityHeaders]
-    public class AccountController : Controller
+    [Route("api/v1/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class AccountController : ControllerBase
     {
-        private readonly IIdentityServerInteractionService _interaction;
-        private readonly IClientStore _clientStore;
+        private readonly ApplicationUserManager _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountController(IIdentityServerInteractionService interaction, IClientStore clientStore)
+        public AccountController(ApplicationUserManager userManager, IHttpContextAccessor httpContextAccessor)
         {
-            _interaction = interaction;
-            _clientStore = clientStore;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        /// <summary>
-        /// Show login page
-        /// </summary>
-        [HttpGet]
-        public async Task<IActionResult> Login(string returnUrl)
+        //
+        // POST: api/Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Register")]
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
-            if (context?.IdP != null)
+            if (!ModelState.IsValid) return BadRequest();
+            
+            var user = new User
             {
-                // if IdP is passed, then bypass showing the login screen
-                return ExternalLogin(context.IdP, returnUrl);
-            }
-
-            var vm = await BuildLoginViewModelAsync(returnUrl, context);
-
-            ViewData["ReturnUrl"] = returnUrl;
-
-            return View(vm);
-        }
-
-        private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl, AuthorizationRequest context)
-        {
-            var allowLocal = true;
-            if (context?.ClientId != null)
-            {
-                var client = await _clientStore.FindEnabledClientByIdAsync(context.ClientId);
-                if (client != null)
-                {
-                    allowLocal = client.EnableLocalLogin;
-                }
-            }
-
-            return new LoginViewModel
-            {
-                ReturnUrl = returnUrl,
-                UserName = context?.LoginHint,
+                UserName = model.UserName,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
             };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                return Accepted();
+            }
+
+            return BadRequest();
         }
 
-        /// <summary>
-        /// initiate roundtrip to external authentication provider
-        /// </summary>
-        [HttpGet]
-        public IActionResult ExternalLogin(string provider, string returnUrl)
+        [HttpPost]
+        [Route("AssignCurrentUserToRoles")]
+        public async Task<ActionResult> AssignCurrentUserToRoles(IEnumerable<string> roles)
         {
-            if (returnUrl != null)
+            var roleEnumerable = roles as IList<string> ?? roles.ToList();
+            if (!ModelState.IsValid || !roleEnumerable.Any())
             {
-                returnUrl = UrlEncoder.Default.Encode(returnUrl);
+                return BadRequest();
             }
-            returnUrl = "/account/externallogincallback?returnUrl=" + returnUrl;
 
-            // start challenge and roundtrip the return URL
-            var props = new AuthenticationProperties
+            var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
+            if (currentUser == null) return BadRequest();
+
+            var result = await _userManager.AddToRolesAsync(currentUser, roleEnumerable);
+
+            if (result.Succeeded)
             {
-                RedirectUri = returnUrl,
-                Items = { { "scheme", provider } }
-            };
-            return new ChallengeResult(provider, props);
+                return Accepted();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AssignUserToRoles(int userId, IEnumerable<string> roles)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user == null) return BadRequest();
+
+            var result = await _userManager.AddToRolesAsync(user, roles);
+
+            if (result.Succeeded)
+            {
+                return Accepted();
+            }
+
+            return BadRequest();
         }
     }
 }

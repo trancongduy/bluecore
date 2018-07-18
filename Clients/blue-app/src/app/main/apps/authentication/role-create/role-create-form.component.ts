@@ -42,7 +42,7 @@ export class RoleCreateFormDialogComponent
         // this.dialogTitle = 'NEW ROLE';
         this.role = new Role({});
         this.roleForm = this.createRoleForm();
-        this.addAnother = true;
+        this.addAnother = false;
 
         this._fuseTranslationLoaderService.loadTranslations(english, vietnamese);
     }
@@ -61,7 +61,7 @@ export class RoleCreateFormDialogComponent
         return this._formBuilder.group({
             code        : [this.role.code, Validators.required],
             name        : [this.role.name, Validators.required],
-            description : [this.role.description, Validators.required]
+            description : [this.role.description]
         });
     }
 

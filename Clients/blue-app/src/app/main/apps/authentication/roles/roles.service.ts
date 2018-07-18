@@ -65,15 +65,15 @@ export class RolesService implements Resolve<any>
     }
 
      /**
-     * Update roles
+     * Create roles
      *
      * @param roles
      * @returns {Promise<any>}
      */
-    UpdateRoles(roles): Promise<any>
+    CreateRoles(roles): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this.httpClient.post(`${this.appConstant.Server}api/roles`, [...roles])
+            this.httpClient.post(`${this.appConstant.Server}api/rolecollections`, [...roles])
             .subscribe((response: any) => {
                 this.getRoles();
             }, reject);

@@ -110,7 +110,8 @@ export class AppComponent implements OnInit, OnDestroy
         }
 
         // if (this.Authenticated !== true) {
-        //     this._location.go('auth/login');
+        //     //this._location.go('auth/login');
+        //     this.login();
         // }
     }
 

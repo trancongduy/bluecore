@@ -6,6 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
 
+import { SecurityService } from 'app/shared/services/security.service';
+
 @Component({
     selector   : 'login',
     templateUrl: './login.component.html',
@@ -28,7 +30,8 @@ export class LoginComponent implements OnInit, OnDestroy
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private securityService: SecurityService
     )
     {
         // Configure the layout
@@ -117,5 +120,10 @@ export class LoginComponent implements OnInit, OnDestroy
                 this.loginFormErrors[field] = control.errors;
             }
         }
+    }
+
+    login(): void
+    {
+        this.securityService.Authorize();
     }
 }

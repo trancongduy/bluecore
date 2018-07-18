@@ -79,7 +79,7 @@
                                 </mat-form-field>
 
                                 <label class="pr-8" for="active">Blocked</label>
-                                <mat-slide-toggle name="active" formControlName="active" [checked]="roleForm.get('active')" arial-label="active"></mat-slide-toggle>
+                                <mat-slide-toggle name="active" formControlName="active" (change)="onChange($event)" arial-label="active"></mat-slide-toggle>
                                 <label class="px-8" for="active">Active</label>
 
                                 <div class="pt-24" fxLayout="row" fxLayoutAlign="start center">

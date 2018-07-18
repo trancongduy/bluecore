@@ -29,6 +29,7 @@ export class RoleComponent implements OnInit, OnDestroy
     pageType: string;
     roleForm: FormGroup;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    isActive: number=0;
 
     // Private
     private unsubscribeAll: Subject<any>;
@@ -77,7 +78,7 @@ export class RoleComponent implements OnInit, OnDestroy
 
                 if ( role )
                 {
-                    this.role = new Role(role);
+                    this.role = role;
                     this.pageType = 'edit';
                 }
 

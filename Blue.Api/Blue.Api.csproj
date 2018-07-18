@@ -6,6 +6,7 @@
     <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
     <UserSecretsId>aspnet-Blue.Web-E012496D-7857-4BCF-A7A3-5F321718859E</UserSecretsId>
     <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,8 +38,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.0" />
-    <PackageReference Include="NSwag.AspNetCore" Version="11.17.18" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1.1" />
+    <PackageReference Include="NSwag.AspNetCore" Version="11.17.21" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
@@ -46,7 +47,6 @@
     <Folder Include="Modules\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Framework.Infrastructure\Framework.Infrastructure.csproj" />
     <ProjectReference Include="..\Framework\Framework.Constract\Framework.Constract.csproj" />
     <ProjectReference Include="..\Framework\Framework.Data\Framework.Data.csproj" />
     <ProjectReference Include="..\Modules\Blue.Constract\Blue.Constract.csproj" />
@@ -247,10 +247,5 @@
     <None Include="wwwroot\assets\images\patterns\rain-grey.png" />
     <None Include="wwwroot\assets\images\patterns\rain.png" />
     <None Include="wwwroot\assets\images\placeholder.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Update="Views\Account\Login.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
   </ItemGroup>
 </Project>

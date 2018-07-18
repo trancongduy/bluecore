@@ -115,7 +115,7 @@ export class RoleService implements Resolve<any>
     deleteRole(role): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this.httpClient.delete(`${this.appConstant.Server}api/roles/`, role)
+            this.httpClient.delete(`${this.appConstant.Server}api/roles/${role.id}`)
                 .subscribe((response: any) => {
                     resolve(response);
                 }, reject);

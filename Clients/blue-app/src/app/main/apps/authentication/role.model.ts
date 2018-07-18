@@ -20,6 +20,6 @@ export class Role
         this.code = role.code || '';
         this.name = role.name || '';
         this.description = role.description || '';
-        this.active = role.active || true;
+        this.active = role.active || false;
     }
 }

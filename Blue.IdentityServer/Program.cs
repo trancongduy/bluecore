@@ -1,6 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using Blue.IdentityServer.Data;
+using IdentityServer4.EntityFramework.DbContexts;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Blue.IdentityServer
 {
@@ -8,17 +11,24 @@ namespace Blue.IdentityServer
     {
         public static void Main(string[] args)
         {
-            Console.Title = "Blue Indentity Server";
+            BuildWebHost(args)
+                .MigrateDbContext<PersistedGrantDbContext>((_, __) => { })
+                .MigrateDbContext<ConfigurationDbContext>((context, services) =>
+                {
+                    var configuration = services.GetService<IConfiguration>();
 
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseUrls("http://localhost:5000")
+                    new ConfigurationDbContextSeed()
+                        .SeedAsync(context, configuration)
+                        .Wait();
+                })
+                .Run();
+        }
+
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
-
-            host.Run();
-        }
     }
 }
