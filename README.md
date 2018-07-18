@@ -1,2 +1,2 @@
 # bluecore
-.NET Core and Angular projects
+An project built on .NET Core and Angular 6
