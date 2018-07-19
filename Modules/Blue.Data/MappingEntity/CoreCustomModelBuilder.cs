@@ -14,12 +14,12 @@ namespace Blue.Data.MappingEntity
             modelBuilder.Entity<Role>()
                 .ToTable("AspNetRoles");
 
-            modelBuilder.Entity<UserClaim>(b =>
-            {
-                b.HasKey(uc => uc.Id);
-                b.HasOne(uc => uc.User).WithMany(x => x.UserClaims).HasForeignKey(u => u.UserId);
-                b.ToTable("AspNetUserClaims");
-            });
+            //modelBuilder.Entity<UserClaim>(b =>
+            //{
+            //    b.HasKey(uc => uc.Id);
+            //    b.HasOne(uc => uc.User).WithMany(x => x.UserClaims).HasForeignKey(u => u.UserId);
+            //    b.ToTable("AspNetUserClaims");
+            //});
 
             modelBuilder.Entity<RoleClaim>(b =>
             {

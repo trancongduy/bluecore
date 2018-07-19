@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Reflection;
 using Autofac;
-using Blue.Data;
 using Blue.Data.IdentityService;
 using Blue.Data.Models.IdentityModel;
 using Blue.IdentityServer.Attributes;
+using Blue.IdentityServer.Infrastructure.Data;
 using Framework.Common.Custom;
 using Framework.Constract.Interfaces;
 using Framework.Data;
-using Framework.Data.Interfaces;
 using Framework.Data.SeedWork;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +25,7 @@ namespace Blue.IdentityServer.Extensions
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddDbContext<BlueDbContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString,
                         sqlServerOptionsAction: sqlOptions =>
                         {
@@ -35,7 +34,7 @@ namespace Blue.IdentityServer.Extensions
                             sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                         }));
 
-            //services.AddDbContext<BlueDbContext>(options =>
+            //services.AddDbContext<ApplicationDbContext>(options =>
             //               options.UseNpgsql(connectionString,
             //      b => b.MigrationsAssembly(migrationsAssembly));
 
@@ -48,12 +47,10 @@ namespace Blue.IdentityServer.Extensions
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddIdentity<User, Role>()
-                    .AddRoleStore<RoleStore>()
-                    .AddUserStore<UserStore>()
                     .AddRoleManager<ApplicationRoleManager>()
                     .AddUserManager<ApplicationUserManager>()
                     .AddSignInManager<ApplicationSignInManager>()
-                    .AddEntityFrameworkStores<BlueDbContext>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
 
             services.AddIdentityServer(options =>
@@ -103,7 +100,6 @@ namespace Blue.IdentityServer.Extensions
         {
             var builder = new ContainerBuilder();
             // Setup DI
-            builder.RegisterType<BlueDbContext>().As<IBaseContext>();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterGeneric(typeof(BaseRepository<>)).As(typeof(IRepository<>));
             builder.RegisterType<AuditAttribute>().InstancePerRequest();

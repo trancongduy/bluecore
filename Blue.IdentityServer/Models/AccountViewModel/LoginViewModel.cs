@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Blue.IdentityServer.Models.Account
+namespace Blue.IdentityServer.Models.AccountViewModel
 {
     public class LoginViewModel
     {

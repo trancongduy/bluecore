@@ -1,9 +1,11 @@
 ﻿using System.IO;
-using Blue.IdentityServer.Data;
+using Blue.IdentityServer.Infrastructure.Data;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Blue.IdentityServer
 {
@@ -13,6 +15,15 @@ namespace Blue.IdentityServer
         {
             BuildWebHost(args)
                 .MigrateDbContext<PersistedGrantDbContext>((_, __) => { })
+                .MigrateDbContext<ApplicationDbContext>((context, services) =>
+                {
+                    var env = services.GetService<IHostingEnvironment>();
+                    var logger = services.GetService<ILogger<ApplicationDbContextSeed>>();
+
+                    new ApplicationDbContextSeed()
+                        .SeedAsync(context, env, logger)
+                        .Wait();
+                })
                 .MigrateDbContext<ConfigurationDbContext>((context, services) =>
                 {
                     var configuration = services.GetService<IConfiguration>();

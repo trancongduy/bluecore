@@ -5,7 +5,7 @@ using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.Extensions.Configuration;
 
-namespace Blue.IdentityServer.Data
+namespace Blue.IdentityServer.Infrastructure.Data
 {
     public class ConfigurationDbContextSeed
     {

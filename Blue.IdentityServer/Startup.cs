@@ -20,7 +20,7 @@ using Blue.Data;
 using Blue.Data.IdentityService;
 using Blue.Data.Models.IdentityModel;
 using Blue.IdentityServer.Extensions;
-using Blue.IdentityServer.Services;
+using Blue.IdentityServer.Infrastructure.Services;
 
 namespace Blue.IdentityServer
 {
@@ -48,21 +48,13 @@ namespace Blue.IdentityServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-
-            services.AddDbContext<BlueDbContext>(options =>
-                    options.UseSqlServer(connectionString,
-                    b => b.MigrationsAssembly(migrationsAssembly)));
-
-            //services.AddDbContext<BlueDbContext>(options =>
-            //        options.UseNpgsql(connectionString,
-            //        b => b.MigrationsAssembly(migrationsAssembly)));
-
             services.AddTransient<ILoginService<User>, EfLoginService>();
             services.AddTransient<IUserResolverService, UserResolverService>();
 
+            services.AddCustomizedDataStore(Configuration);
             services.AddCustomizedIdentity(Configuration);
+
+            services.Configure<AppSettings>(Configuration);
 
             // Still working fine with IdentityServer4
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

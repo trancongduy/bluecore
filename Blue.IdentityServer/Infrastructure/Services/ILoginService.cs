@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Blue.IdentityServer.Services
+namespace Blue.IdentityServer.Infrastructure.Services
 {
     public interface ILoginService<T>
     {

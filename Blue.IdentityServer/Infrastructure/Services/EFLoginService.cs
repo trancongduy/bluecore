@@ -2,7 +2,7 @@
 using Blue.Data.Models.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 
-namespace Blue.IdentityServer.Services
+namespace Blue.IdentityServer.Infrastructure.Services
 {
     public class EfLoginService : ILoginService<User>
     {
