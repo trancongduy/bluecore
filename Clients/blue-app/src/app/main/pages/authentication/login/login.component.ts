@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -18,6 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy
 {
     loginForm: FormGroup;
     loginFormErrors: any;
+    authenticated: boolean = false;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -31,7 +34,9 @@ export class LoginComponent implements OnInit, OnDestroy
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
-        private securityService: SecurityService
+        private securityService: SecurityService,
+        private location: Location,
+        private router: Router
     )
     {
         // Configure the layout
@@ -73,7 +78,6 @@ export class LoginComponent implements OnInit, OnDestroy
     {
         this.loginForm = this._formBuilder.group({
             email   : ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required]
         });
 
         this.loginForm.valueChanges
@@ -81,6 +85,17 @@ export class LoginComponent implements OnInit, OnDestroy
             .subscribe(() => {
                 this.onLoginFormValuesChanged();
             });
+
+        if (window.location.hash) {
+            this.securityService.AuthorizedCallback();
+        }
+    
+        console.log('identity component, checking authorized' + this.securityService.IsAuthorized);
+        this.authenticated = this.securityService.IsAuthorized;
+
+        if(this.authenticated) {
+            this.router.navigate(['/home']);
+        }
     }
 
     /**

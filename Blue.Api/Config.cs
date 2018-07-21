@@ -36,7 +36,7 @@ namespace Blue.Api
                     Scopes =
                     {
                         new Scope("roles", new List<string> {"role"}),
-                        new Scope("api1")
+                        new Scope("blue_api")
                         //new Scope
                         //{
                         //    Name = "merchant_api_keys",
@@ -69,12 +69,6 @@ namespace Blue.Api
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orders",
-                        "basket",
-                        "locations",
-                        "marketing",
-                        "webshoppingagg",
-                        "orders.signalrhub",
                         "blue_api"
                     }
                 },

@@ -22,31 +22,14 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field>
-                    <input matInput type="password" placeholder="Password" formControlName="password">
-                    <mat-error *ngIf="loginFormErrors.password.required">
-                        Password is required
-                    </mat-error>
-                </mat-form-field>
-
-                <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
-                     fxLayoutAlign="space-between center">
-                    <mat-checkbox class="remember-me" aria-label="Remember Me">
-                        Remember Me
-                    </mat-checkbox>
-
-                    <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">
-                        Forgot Password?
-                    </a>
-                </div>
-
-                <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
+                <button mat-raised-button color="accent" class="submit-button" aria-label="CONTINUE"
+                        (click)="login()"
                         [disabled]="loginForm.invalid">
-                    LOGIN
+                    CONTINUE
                 </button>
 
                 <!-- <a mat-raised-button color="accent" [routerLink]="'/home'">Continue</a> -->
-                <a mat-raised-button color="accent" (click)="login()">Continue</a>
+                <!-- <a mat-raised-button color="accent" (click)="login()">Continue</a> -->
             </form>
         </div>
 

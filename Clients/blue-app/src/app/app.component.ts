@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, OnDestroy
 {
     navigation: any;
     fuseConfig: any;
-    Authenticated: boolean = false;
+    authenticated: boolean = false;
     subscription: Subscription;
 
     // Private
@@ -50,10 +50,10 @@ export class AppComponent implements OnInit, OnDestroy
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private _securityService: SecurityService
+        private securityService: SecurityService
     )
     {
-        this.Authenticated = this._securityService.IsAuthorized;
+        this.authenticated = this.securityService.IsAuthorized;
 
         // Get default navigation
         this.navigation = navigation;
@@ -97,22 +97,11 @@ export class AppComponent implements OnInit, OnDestroy
                 this.fuseConfig = config;
             });
 
-        this.subscription = this._securityService.authenticationChallenge$.subscribe(res => 
-            this.Authenticated = res
-        );
+        this.subscription = this.securityService.authenticationChallenge$.subscribe(res => this.authenticated = res);
 
         //Get configuration from server environment variables:
         // console.log('configuration');
-        // this._configurationService.load();       
-
-        if (window.location.hash) {
-            this._securityService.AuthorizedCallback();
-        }
-
-        // if (this.Authenticated !== true) {
-        //     //this._location.go('auth/login');
-        //     this.login();
-        // }
+        // this._configurationService.load();
     }
 
     /**
@@ -140,6 +129,6 @@ export class AppComponent implements OnInit, OnDestroy
     }
 
     login() {
-        this._securityService.Authorize();
+        this.securityService.Authorize();
     }
 }
