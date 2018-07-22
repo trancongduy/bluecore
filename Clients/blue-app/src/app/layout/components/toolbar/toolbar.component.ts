@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
@@ -9,6 +9,8 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
+
+import { SecurityService } from 'app/shared/services/security.service';
 
 @Component({
     selector   : 'toolbar',
@@ -26,6 +28,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
     selectedLanguage: any;
     showLoadingBar: boolean;
     userStatusOptions: any[];
+    authenticated: boolean = false;
+    subscription: Subscription;
+    fullName: string = '';
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -37,12 +42,14 @@ export class ToolbarComponent implements OnInit, OnDestroy
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {Router} _router
      * @param {TranslateService} _translateService
+     * @param {securittyService} securittyService
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
         private _router: Router,
-        private _translateService: TranslateService
+        private _translateService: TranslateService,
+        private securittyService: SecurityService
     )
     {
         // Set the defaults
@@ -131,6 +138,19 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, {'id': this._translateService.currentLang});
+
+        this.subscription = this.securittyService.authenticationChallenge$.subscribe(res => {
+            this.authenticated = res;
+            this.fullName = `${this.securittyService.UserData.given_name} ${this.securittyService.UserData.family_name}`;
+        });
+
+        console.log('identity component, checking authorized' + this.securittyService.IsAuthorized);
+        this.authenticated = this.securittyService.IsAuthorized;
+
+        if (this.authenticated) {
+            if (this.securittyService.UserData)
+            this.fullName = `${this.securittyService.UserData.given_name} ${this.securittyService.UserData.family_name}`;
+        }
     }
 
     /**
@@ -180,5 +200,15 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Use the selected language for translations
         this._translateService.use(langId);
+    }
+
+    logoutClicked(event: any): void {
+        event.preventDefault();
+        console.log('Logout clicked');
+        this.logout();
+    }
+
+    logout() {
+        this.securittyService.Logoff();
     }
 }

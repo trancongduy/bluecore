@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -50,7 +51,8 @@ export class AppComponent implements OnInit, OnDestroy
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private securityService: SecurityService
+        private securityService: SecurityService,
+        private router: Router
     )
     {
         this.authenticated = this.securityService.IsAuthorized;
@@ -97,11 +99,19 @@ export class AppComponent implements OnInit, OnDestroy
                 this.fuseConfig = config;
             });
 
+        if (window.location.hash) {
+            this.securityService.AuthorizedCallback();
+        }
+
         this.subscription = this.securityService.authenticationChallenge$.subscribe(res => this.authenticated = res);
 
         //Get configuration from server environment variables:
         // console.log('configuration');
         // this._configurationService.load();
+
+        if(this.authenticated !== true) {
+            this._location.go('/auth/login');
+        }
     }
 
     /**

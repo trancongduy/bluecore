@@ -32,7 +32,7 @@
                     class="user-button" aria-label="User Button">
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <img class="avatar" src="assets/images/avatars/profile.jpg" alt="Profile">
-                    <span class="username mr-12" fxHide fxShow.gt-sm>John Doe</span>
+                    <span class="username mr-12" fxHide fxShow.gt-sm>{{fullName}}</span>
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
                 </div>
             </button>
@@ -49,7 +49,7 @@
                     <span>Inbox</span>
                 </button>
 
-                <button mat-menu-item class="">
+                <button mat-menu-item class="" (click)="logoutClicked($event)">
                     <mat-icon>exit_to_app</mat-icon>
                     <span>Logout</span>
                 </button>

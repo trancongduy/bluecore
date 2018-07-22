@@ -1,7 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -34,9 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
-        private securityService: SecurityService,
-        private location: Location,
-        private router: Router
+        private securityService: SecurityService
     )
     {
         // Configure the layout
@@ -59,8 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy
 
         // Set the defaults
         this.loginFormErrors = {
-            email   : {},
-            password: {}
+            username   : {}
         };
 
         // Set the private defaults
@@ -77,7 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.loginForm = this._formBuilder.group({
-            email   : ['', [Validators.required, Validators.email]],
+            username   : ['', [Validators.required]],
         });
 
         this.loginForm.valueChanges
@@ -92,10 +87,6 @@ export class LoginComponent implements OnInit, OnDestroy
     
         console.log('identity component, checking authorized' + this.securityService.IsAuthorized);
         this.authenticated = this.securityService.IsAuthorized;
-
-        if(this.authenticated) {
-            this.router.navigate(['/home']);
-        }
     }
 
     /**
