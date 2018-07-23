@@ -7,9 +7,12 @@
 |Travis       | Linux / MacOS  |[![Build Status](https://travis-ci.org/thangln1003/bluecore.svg?branch=master)](https://travis-ci.org/thangln1003/bluecore) |
 
 ## Technologies and frameworks used:
+Blue Api:
 - ASP.NET MVC Core 2.1.1
 - Entity Framework Core 2.1.1
 - ASP.NET Identity Core 2.1.2
 - IdentityServer4 2.2.0
 - Autofac 4.8.1
-- Angular 6.0.5
+
+Blue App:
+- Angular 6.0.5 (Using Fuse Template: http://angular-material.fusetheme.com/)
