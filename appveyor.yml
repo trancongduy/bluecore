@@ -11,7 +11,7 @@ matrix:
 
 # restore NuGet packages before running MSBuild
 before_build:
-  - appveyor-retry dotnet restore -v Minimal
+  - nuget restore
   
 # package Web Application project for Web Deploy
 build:
