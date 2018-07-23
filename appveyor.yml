@@ -18,10 +18,12 @@ assembly_info:
 
 # restore NuGet packages before running MSBuild
 before_build:
-  - cmd: cd blue.api
   - nuget restore
+  - cmd: cd blue.api
   
 # package Web Application project for Web Deploy
 build:
   verbosity: minimal
   publish_wap: true
+
+test: off
