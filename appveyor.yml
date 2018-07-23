@@ -27,3 +27,4 @@ build:
   publish_wap: true
 
 test: off
+deploy: off
