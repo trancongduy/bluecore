@@ -15,4 +15,4 @@ Blue Api:
 - Autofac 4.8.1
 
 Blue App:
-- Angular 6.0.5 (Using Fuse Template: http://angular-material.fusetheme.com/)
+- Angular 6.0.5
