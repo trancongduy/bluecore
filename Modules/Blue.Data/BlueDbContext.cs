@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Framework.Data.Interfaces;
-using Framework.Data.Models;
 using Framework.Constract.SeedWork;
 using Microsoft.EntityFrameworkCore.Storage;
 using Blue.Data.IdentityService;
@@ -26,28 +25,11 @@ namespace Blue.Data
     {
         private IDbContextTransaction _dbContextTransaction;
         private DbTransaction _transaction;
-        private static bool _databaseInitialized;
-        private static readonly object Lock = new object();
         private readonly IUserResolverService _userResolverService;
 
         public BlueDbContext(DbContextOptions<BlueDbContext> options, IUserResolverService userResolverService) : base(options)
         {
             _userResolverService = userResolverService;
-
-            if (_databaseInitialized)
-            {
-                return;
-            }
-            lock (Lock)
-            {
-                if (!_databaseInitialized)
-                {
-                    // Set the database intializer which is run once during application start
-                    // This seeds the database with admin user credentials and admin role
-                    //Database.SetInitializer(new ApplicationDbInitializer());
-                    _databaseInitialized = true;
-                }
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
