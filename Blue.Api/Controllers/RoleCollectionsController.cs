@@ -10,7 +10,7 @@ using Framework.Constract.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blue.Api.ApiControllers
+namespace Blue.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]

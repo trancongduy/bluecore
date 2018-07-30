@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Blue.Api.ApiControllers
+namespace Blue.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/Values")]
